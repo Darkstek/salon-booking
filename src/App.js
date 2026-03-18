@@ -32,7 +32,8 @@ function App() {
   }
 
   if (isGuest) {
-    return (
+  return (
+    <BrowserRouter>
       <div className="min-h-screen bg-gray-50">
         <Toaster position="top-right" />
         <Header onLogout={null} />
@@ -48,8 +49,9 @@ function App() {
           </div>
         </div>
       </div>
-    );
-  }
+    </BrowserRouter>
+  );
+}
 
   return (
     <BrowserRouter>
