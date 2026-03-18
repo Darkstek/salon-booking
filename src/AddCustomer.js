@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './AddCustomer.css';
 import toast from 'react-hot-toast';
+import API_URL from './config';
 
 function AddCustomer() {
   const [name, setName] = useState('');
@@ -9,7 +10,7 @@ function AddCustomer() {
   const [customers, setCustomers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/customers')
+    fetch(`${API_URL}/api/customers`)
       .then(res => res.json())
       .then(data => setCustomers(data));
   }, []);
@@ -17,7 +18,7 @@ function AddCustomer() {
 const handleSubmit = async () => {
   if (name === '') return;
 
-  const response = await fetch('http://localhost:5000/api/customers', {
+  const response = await fetch(`${API_URL}/api/customers`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, phone, note }),

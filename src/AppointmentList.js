@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import API_URL from './config';
 
 function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
@@ -7,13 +8,13 @@ function AppointmentList() {
   const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/appointments')
+    fetch(`${API_URL}/api/appointments`)
       .then(res => res.json())
       .then(data => setAppointments(data));
   }, []);
 
   const handleDelete = async (id) => {
-    await fetch(`http://localhost:5000/api/appointments/${id}`, {
+    await fetch(`${API_URL}/api/appointments/${id}`, {
       method: 'DELETE',
     });
     setAppointments(appointments.filter(a => a.id !== id));

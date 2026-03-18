@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import API_URL from './config';
 
 const services = [
   { id: 1, name: 'Pedikúra' },
@@ -21,7 +22,7 @@ function AddAppointment() {
   const [note, setNote] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/customers')
+    fetch(`${API_URL}/api/customers`)
       .then(res => res.json())
       .then(data => setCustomers(data));
   }, []);
@@ -29,7 +30,7 @@ function AddAppointment() {
   const handleSubmit = async () => {
     if (!customerId || !serviceName || !date || !time) return;
 
-    await fetch('http://localhost:5000/api/appointments', {
+    await fetch(`${API_URL}/api/appointments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
