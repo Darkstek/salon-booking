@@ -1,70 +1,131 @@
-# Getting Started with Create React App
+# 💅 Salon Booking App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Fullstack webová aplikace pro správu rezervací a zákazníků v kosmetickém salonu. Projekt byl vytvořen jako reálná aplikace pro rodinný podnik s cílem nahradit placené SaaS řešení.
 
-## Available Scripts
+**🔗 Live Demo:** [salon-booking.vercel.app](https://salon-booking.vercel.app)  
+**📦 Backend Repo:** [github.com/Darkstek/salon-server](https://github.com/Darkstek/salon-server)
 
-In the project directory, you can run:
+> 🔑 **Demo přihlášení pro recruitery:**  
+> Email: `mama@salon.cz`  
+> Heslo: `heslo123`
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+| Vrstva | Technologie |
+|--------|-------------|
+| Frontend | React, Tailwind CSS, React Router |
+| Backend | Node.js, Express.js |
+| Databáze | PostgreSQL |
+| Autentizace | JWT (JSON Web Tokens), bcrypt |
+| Hosting | Vercel (frontend), Railway (backend + DB) |
+| Verzování | Git, GitHub |
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## ✨ Funkce
 
-### `npm run build`
+- 🔐 **Přihlašování** — JWT autentizace, hashování hesel přes bcrypt
+- 👥 **Správa zákazníků** — přidání, zobrazení, smazání zákazníků s poznámkami
+- 📅 **Správa termínů** — přidání termínů, řazení podle data, oddělení nadcházejících a minulých
+- 🗑️ **Mazání** — potvrzovací dialog pro smazání termínů i zákazníků
+- 👁️ **Guest mód** — veřejná stránka se službami a ceníkem bez přihlášení
+- 🔔 **Toast notifikace** — uživatelsky přívětivé notifikace místo alert()
+- 📱 **Responzivní design** — funguje na mobilu i desktopu
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🏗️ Architektura
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+salon-booking/          # React frontend (Vercel)
+├── src/
+│   ├── App.js          # Routing, auth state
+│   ├── Login.js        # JWT přihlášení
+│   ├── Header.js       # Navigace
+│   ├── AppointmentList.js  # Seznam termínů
+│   ├── AddAppointment.js   # Formulář pro termín
+│   ├── CustomerList.js     # Správa zákazníků
+│   └── Services.js     # Veřejný ceník
 
-### `npm run eject`
+salon-server/           # Node.js backend (Railway)
+├── index.js            # Express server, REST API
+├── createUser.js       # Skript pro vytvoření uživatele
+└── setupDb.js          # Inicializace databáze
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🔌 REST API Endpoints
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+| Metoda | Endpoint | Popis |
+|--------|----------|-------|
+| POST | `/api/login` | Přihlášení, vrátí JWT token |
+| GET | `/api/customers` | Seznam všech zákazníků |
+| POST | `/api/customers` | Přidání zákazníka |
+| DELETE | `/api/customers/:id` | Smazání zákazníka |
+| GET | `/api/appointments` | Seznam všech termínů |
+| POST | `/api/appointments` | Přidání termínu |
+| DELETE | `/api/appointments/:id` | Smazání termínu |
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🗄️ Databázové schéma
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```sql
+customers (id, name, phone, note, created_at)
+appointments (id, customer_id, service_name, appointment_date, appointment_time, note, created_at)
+users (id, email, password, created_at)
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🚀 Lokální spuštění
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Požadavky
+- Node.js v18+
+- PostgreSQL
 
-### Analyzing the Bundle Size
+### Frontend
+```bash
+git clone https://github.com/Darkstek/salon-booking
+cd salon-booking
+npm install
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Backend
+```bash
+git clone https://github.com/Darkstek/salon-server
+cd salon-server
+npm install
+node setupDb.js    # Vytvoří tabulky
+node createUser.js # Vytvoří admin účet
+npm run dev
+```
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 💡 Co jsem se naučil
 
-### Advanced Configuration
+- Návrh a implementace REST API v Node.js + Express
+- JWT autentizace a bezpečné hashování hesel
+- Práce s PostgreSQL a psaní SQL dotazů
+- Propojení React frontendu s backendem přes fetch API
+- React hooks — useState, useEffect, props
+- Deployment fullstack aplikace (Vercel + Railway)
+- Git workflow a správa více repozitářů
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 📸 Screenshots
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> *Přihlašovací stránka, správa termínů, seznam zákazníků*
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 👤 Autor
+
+**Darkstek** — student softwarového vývoje na Unicorn University  
+[GitHub](https://github.com/Darkstek)
