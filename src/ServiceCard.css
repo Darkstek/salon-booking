@@ -1,0 +1,23 @@
+.service-card {
+  background-color: #f9f0f3;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-left: 4px solid #e8a4b8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.service-card h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #2c2c2c;
+  flex: 1;
+}
+
+.service-card span {
+  color: #888;
+  font-size: 0.9rem;
+  margin-left: 20px;
+}
