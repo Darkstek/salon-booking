@@ -8,6 +8,8 @@ function CustomerList() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [note, setNote] = useState('');
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customerDetail, setCustomerDetail] = useState(null);
 
   useEffect(() => {
     fetch(`${API_URL}/api/customers`)
@@ -32,6 +34,20 @@ function CustomerList() {
     toast.success('Zákazník uložen! ✅');
   };
 
+  const handleSelectCustomer = async (customer) => {
+  if (selectedCustomer?.id === customer.id) {
+    setSelectedCustomer(null);
+    setCustomerDetail(null);
+    return;
+    }
+  
+    setSelectedCustomer(customer);
+  
+    const response = await fetch(`${API_URL}/api/customers/${customer.id}/detail`);
+    const data = await response.json();
+    setCustomerDetail(data);
+    };
+
   const handleDelete = async (id) => {
     await fetch(`${API_URL}/api/customers/${id}`, {
       method: 'DELETE',
@@ -39,7 +55,7 @@ function CustomerList() {
     setCustomers(customers.filter(c => c.id !== id));
     setDeleteId(null);
     toast.success('Zákazník smazán!');
-  };
+    };
 
   return (
     <div className="max-w-xl mx-auto mt-10 bg-white rounded-2xl shadow-md p-8 mb-10">
@@ -74,20 +90,54 @@ function CustomerList() {
 
       <ul>
         {customers.map(c => (
-          <li key={c.id} className="bg-pink-50 border-l-4 border-pink-300 rounded-lg px-4 py-3 mb-2">
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="font-medium text-gray-800">{c.name} — {c.phone}</div>
-                {c.note && <div className="text-gray-500 text-sm mt-1">📝 {c.note}</div>}
-              </div>
-              <button
-                onClick={() => setDeleteId(c.id)}
-                className="text-red-300 hover:text-red-500 text-xs transition ml-4"
-              >
-                🗑
-              </button>
+         <li key={c.id} className="bg-pink-50 border-l-4 border-pink-300 rounded-lg px-4 py-3 mb-2">
+  <div className="flex justify-between items-center">
+    <div 
+      className="cursor-pointer flex-1"
+      onClick={() => handleSelectCustomer(c)}
+    >
+      <div className="font-medium text-gray-800">{c.name} — {c.phone}</div>
+      {c.note && <div className="text-gray-500 text-sm mt-1">📝 {c.note}</div>}
+    </div>
+    <button
+      onClick={() => setDeleteId(c.id)}
+      className="text-red-300 hover:text-red-500 text-xs transition ml-4"
+    >
+      🗑
+    </button>
+  </div>
+
+  {selectedCustomer?.id === c.id && customerDetail && (
+    <div className="mt-3 pt-3 border-t border-pink-200">
+      
+      {customerDetail.upcoming.length > 0 && (
+  <div className="bg-green-50 border-l-4 border-green-400 rounded-lg px-3 py-2 mb-3">
+    <div className="text-green-700 font-medium text-sm mb-1">✅ Nadcházející schůzky</div>
+    {customerDetail.upcoming.map(u => (
+      <div key={u.id} className="text-green-600 text-sm">
+        {u.service_name} — {new Date(u.appointment_date).toLocaleDateString('cs-CZ')} v {u.appointment_time.slice(0, 5)}
+      </div>
+    ))}
+  </div>
+)}
+
+      {customerDetail.history.length > 0 && (
+        <div>
+          <div className="text-gray-500 text-xs font-bold uppercase mb-2">Historie návštěv</div>
+          {customerDetail.history.map(h => (
+            <div key={h.id} className="text-gray-500 text-sm mb-1">
+              {new Date(h.appointment_date).toLocaleDateString('cs-CZ')} — {h.service_name}
             </div>
-          </li>
+          ))}
+        </div>
+      )}
+
+      {!customerDetail.upcoming && customerDetail.history.length === 0 && (
+        <div className="text-gray-400 text-sm">Žádná historie</div>
+      )}
+    </div>
+  )}
+</li>
         ))}
       </ul>
 
