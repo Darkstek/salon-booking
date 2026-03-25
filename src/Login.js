@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GoogleLogin } from '@react-oauth/google';
 import toast from 'react-hot-toast';
 import API_URL from './config';
 
@@ -24,11 +25,42 @@ function Login({ onLogin, onGuest }) {
     }
   };
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+    const response = await fetch(`${API_URL}/api/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: credentialResponse.credential }),
+    });
+
+    const data = await response.json();
+
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      toast.success('Přihlášení přes Google úspěšné!');
+      onLogin();
+    } else {
+      toast.error('Google přihlášení selhalo');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
       <div className="bg-white rounded-2xl shadow-md p-10 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">💅 Salon Booking</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">Salon Booking</h1>
         <p className="text-gray-400 mb-8">Přihlaste se pro správu salonu</p>
+
+        <div className="mb-6 flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}
+            onError={() => toast.error('Google přihlášení selhalo')}
+          />
+        </div>
+
+        <div className="flex items-center gap-3 mb-6">
+          <div className="flex-1 h-px bg-gray-200"></div>
+          <span className="text-gray-400 text-sm">nebo</span>
+          <div className="flex-1 h-px bg-gray-200"></div>
+        </div>
 
         <input
           type="email"
