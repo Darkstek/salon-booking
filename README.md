@@ -2,7 +2,7 @@
 
 Fullstack webová aplikace pro správu rezervací a zákazníků v kosmetickém salonu. Projekt vznikl jako reálné řešení pro rodinný podnik — cílem bylo nahradit předražené SaaS alternativy funkční vlastní aplikací.
 
-**Live Demo:** [salon-booking.vercel.app](https://salon-booking.vercel.app)  
+**Live Demo:** [salon-booking.vercel.app](https://salon-booking-ashy.vercel.app/)  
 **Backend:** [github.com/Darkstek/salon-server](https://github.com/Darkstek/salon-server)
 
 > Demo přihlášení pro recruitery  
