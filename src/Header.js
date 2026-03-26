@@ -14,6 +14,11 @@ function Header({ onLogout }) {
         <Link to="/zakaznici" className="text-gray-400 hover:text-white text-sm transition">
           👥 Zákazníci
         </Link>
+        {onLogout && ( 
+          <Link to="/profil" className="text-gray-400 hover:text-white text-sm transition">
+            ⚙️ Profil
+          </Link>
+        )}
       </div>
       {onLogout && (
         <button
