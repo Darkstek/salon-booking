@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Header from './Header';
-import Services from './Services';
 import AddAppointment from './AddAppointment';
 import AppointmentList from './AppointmentList';
 import CustomerList from './CustomerList';
