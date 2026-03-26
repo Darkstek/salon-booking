@@ -8,6 +8,7 @@ import CustomerList from './CustomerList';
 import Login from './Login';
 import Profile from './Profile'; 
 import PublicSearch from './PublicSearch';
+import PublicProfile from './PublicProfile';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -37,6 +38,8 @@ if (isGuest) {
     <BrowserRouter>
       <Toaster position="top-right" />
       <Routes>
+        <Route path="/" element={<PublicSearch onBack={() => setIsGuest(false)} />} />
+        <Route path="/salon/:id" element={<PublicProfile />} />
         <Route path="*" element={<PublicSearch onBack={() => setIsGuest(false)} />} />
       </Routes>
     </BrowserRouter>
