@@ -80,17 +80,23 @@ function Login({ onLogin, onGuest }) {
 
         <button
           onClick={handleSubmit}
-          className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-6 rounded-lg w-full transition mb-3"
+          className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-6 rounded-lg w-full transition mb-4"
         >
           Přihlásit se
         </button>
 
-        <button
-          onClick={onGuest}
-          className="text-gray-400 hover:text-gray-600 text-sm w-full text-center transition"
-        >
-          Zobrazit služby a ceník →
-        </button>
+        {/* 👇 NOVÉ: výrazné tlačítko pro hledání salonu */}
+        <div className="border-t border-gray-100 pt-4 mt-2">
+          <p className="text-center text-gray-400 text-sm mb-3">Hledáte salon?</p>
+          <button
+            onClick={onGuest}
+            className="w-full bg-gray-900 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition flex items-center justify-center gap-2"
+          >
+            🔍 Hledat salon
+          </button>
+        </div>
+        {/* 👆 konec */}
+
       </div>
     </div>
   );
