@@ -7,7 +7,8 @@ import AddAppointment from './AddAppointment';
 import AppointmentList from './AppointmentList';
 import CustomerList from './CustomerList';
 import Login from './Login';
-import Profile from './Profile'; // 👈 NOVÉ: importujeme Profile komponentu
+import Profile from './Profile'; 
+import PublicSearch from './PublicSearch';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -32,27 +33,16 @@ function App() {
     );
   }
 
-  if (isGuest) {
-    return (
-      <BrowserRouter>
-        <div className="min-h-screen bg-gray-50">
-          <Toaster position="top-right" />
-          <Header onLogout={null} />
-          <div className="max-w-2xl mx-auto px-4">
-            <Services />
-            <div className="text-center mt-6 mb-10">
-              <button
-                onClick={() => setIsGuest(false)}
-                className="text-gray-400 hover:text-gray-600 text-sm"
-              >
-                ← Zpět na přihlášení
-              </button>
-            </div>
-          </div>
-        </div>
-      </BrowserRouter>
-    );
-  }
+if (isGuest) {
+  return (
+    <BrowserRouter>
+      <Toaster position="top-right" />
+      <Routes>
+        <Route path="*" element={<PublicSearch onBack={() => setIsGuest(false)} />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
   return (
     <BrowserRouter>
