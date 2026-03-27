@@ -44,10 +44,10 @@ function Login({ onLogin, onGuest }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <div className="bg-white rounded-2xl shadow-md p-10 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Salon Booking</h1>
-        <p className="text-gray-400 mb-8">Přihlaste se pro správu salonu</p>
+    <div className="min-h-screen bg-[#0f1117] flex items-center justify-center px-4">
+      <div className="bg-[#1a1d27] border border-white/5 rounded-2xl p-10 w-full max-w-md">
+        <h1 className="text-3xl font-medium text-white mb-2 tracking-widest uppercase">Salon Booking</h1>
+          <p className="text-gray-600 mb-8 text-sm tracking-wide">Přihlaste se pro správu salonu</p>
 
         <div className="mb-6 flex justify-center">
           <GoogleLogin
@@ -67,7 +67,7 @@ function Login({ onLogin, onGuest }) {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+          className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
         />
 
         <input
@@ -75,26 +75,23 @@ function Login({ onLogin, onGuest }) {
           placeholder="Heslo"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-6 focus:outline-none focus:border-pink-400"
+          className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
         />
 
         <button
           onClick={handleSubmit}
-          className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-6 rounded-lg w-full transition mb-4"
+          className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full transition mb-4 tracking-wide text-sm"
         >
           Přihlásit se
         </button>
 
     
-        <div className="border-t border-gray-100 pt-4 mt-2">
-          <p className="text-center text-gray-400 text-sm mb-3">Hledáte salon?</p>
-          <button
-            onClick={onGuest}
-            className="w-full bg-gray-900 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition flex items-center justify-center gap-2"
-          >
-            🔍 Hledat salon
-          </button>
-        </div>
+        <div className="border-t border-white/5 pt-4 mt-2">
+  <p className="text-center text-gray-600 text-xs mb-3 tracking-wide">Hledáte salon?</p>
+  <button onClick={onGuest} className="w-full bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 px-6 rounded-lg transition text-sm tracking-wide">
+    Hledat salon
+  </button>
+</div>
        
 
       </div>
