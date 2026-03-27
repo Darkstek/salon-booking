@@ -45,31 +45,32 @@ function AppointmentList() {
     }, {});
   };
 
-  const renderGroup = (groups) => {
-    return Object.entries(groups).map(([date, items]) => (
-     <div key={date} className="mb-6">
-  <div className="text-xs font-medium text-blue-500 uppercase tracking-widest mb-3">
-    {date}
-    </div>
-  <div key={a.id} className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-5 py-4 mb-2">
-    <div className="flex justify-between items-center">
-      <strong className="text-white font-medium">{a.customer_name}</strong>
-        <span className="text-blue-400 text-sm">{a.service_name}</span>
+ const renderGroup = (groups) => {
+  return Object.entries(groups).map(([date, items]) => (
+    <div key={date} className="mb-6">
+      <div className="text-xs font-medium text-blue-500 uppercase tracking-widest mb-3">
+        {date}
       </div>
-      <div className="text-gray-600 text-xs mt-2">
-          {a.appointment_time.slice(0, 5)}
-      </div>
+      {items.map(a => (
+        <div key={a.id} className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-5 py-4 mb-2">
+          <div className="flex justify-between items-center">
+            <strong className="text-white font-medium">{a.customer_name}</strong>
+            <span className="text-blue-400 text-sm">{a.service_name}</span>
+          </div>
+          <div className="text-gray-600 text-xs mt-2">
+            {a.appointment_time.slice(0, 5)}
+          </div>
           {a.note && (
-      <div className="text-gray-600 text-xs mt-1">{a.note}</div>
+            <div className="text-gray-600 text-xs mt-1">{a.note}</div>
           )}
-       <button onClick={() => setDeleteId(a.id)} className="text-gray-700 hover:text-red-400 text-xs mt-2 transition">
-          Smazat
-        </button>
-      </div>
-        
-      </div>
-    ));
-  };
+          <button onClick={() => setDeleteId(a.id)} className="text-gray-700 hover:text-red-400 text-xs mt-2 transition">
+            Smazat
+          </button>
+        </div>
+      ))}
+    </div>
+  ));
+};
 
   return (
     <div className="max-w-xl mx-auto mt-6 bg-[#1a1d27] border border-white/5 rounded-2xl p-8 mb-6">
