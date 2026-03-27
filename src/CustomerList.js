@@ -66,10 +66,10 @@ function CustomerList() {
 
       <input
         type="text"
-        placeholder="🔍 Hledat zákazníka..."
+        placeholder="Hledat zákazníka..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-6 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-6 focus:outline-none focus:border-blue-500/50 text-sm"
       />
 
       <input
@@ -121,18 +121,19 @@ function CustomerList() {
   </div>
 
   {selectedCustomer?.id === c.id && customerDetail && (
-    <div className="mt-3 pt-3 border-t border-pink-200">
+    <div className="mt-3 pt-3 border-t border-white/5">
       
       {customerDetail.upcoming.length > 0 && (
   <div className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-3 py-2 mb-3">
-  <div className="text-blue-400 font-medium text-xs mb-1 tracking-wide uppercase">Nadcházející schůzky</div>
-  ...
-  <div key={u.id} className="text-gray-400 text-xs">
+    <div className="text-blue-400 font-medium text-xs mb-1 tracking-wide uppercase">Nadcházející schůzky</div>
+    {customerDetail.upcoming.map(u => (
+      <div key={u.id} className="text-gray-400 text-xs">
         {u.service_name} — {new Date(u.appointment_date).toLocaleDateString('cs-CZ')} v {u.appointment_time.slice(0, 5)}
+         </div>
+         ))}
       </div>
-    ))}
-  </div>
-)}
+    )}
+
 
       {customerDetail.history.length > 0 && (
         <div>
@@ -168,7 +169,7 @@ function CustomerList() {
               </button>
               <button
                 onClick={() => setDeleteId(null)}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-2 px-6 rounded-lg flex-1 transition"
+                className="bg-white/5 hover:bg-white/10 text-gray-400 font-medium py-2 px-6 rounded-lg flex-1 transition"
               >
                 Zrušit
               </button>
