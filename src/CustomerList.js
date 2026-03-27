@@ -4,6 +4,7 @@ import API_URL, { fetchWithAuth } from './config';
 
 function CustomerList() {
   const [customers, setCustomers] = useState([]);
+  const [search, setSearch] = useState('');
   const [deleteId, setDeleteId] = useState(null);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -11,6 +12,8 @@ function CustomerList() {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customerDetail, setCustomerDetail] = useState(null);
 
+
+  
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/customers`)
       .then(res => res.json())
@@ -63,6 +66,14 @@ function CustomerList() {
 
       <input
         type="text"
+        placeholder="🔍 Hledat zákazníka..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-6 focus:outline-none focus:border-pink-400"
+      />
+
+      <input
+        type="text"
         placeholder="Jméno zákazníka"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -89,7 +100,9 @@ function CustomerList() {
       </button>
 
       <ul>
-        {customers.map(c => (
+        {customers.filter(c =>
+  c.name.toLowerCase().includes(search.toLowerCase())
+).map(c => (
          <li key={c.id} className="bg-pink-50 border-l-4 border-pink-300 rounded-lg px-4 py-3 mb-2">
   <div className="flex justify-between items-center">
     <div 

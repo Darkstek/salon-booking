@@ -85,7 +85,7 @@ function Login({ onLogin, onGuest }) {
           Přihlásit se
         </button>
 
-        {/* 👇 NOVÉ: výrazné tlačítko pro hledání salonu */}
+    
         <div className="border-t border-gray-100 pt-4 mt-2">
           <p className="text-center text-gray-400 text-sm mb-3">Hledáte salon?</p>
           <button
@@ -95,7 +95,7 @@ function Login({ onLogin, onGuest }) {
             🔍 Hledat salon
           </button>
         </div>
-        {/* 👆 konec */}
+       
 
       </div>
     </div>
