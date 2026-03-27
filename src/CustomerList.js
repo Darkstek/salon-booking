@@ -61,8 +61,8 @@ function CustomerList() {
     };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white rounded-2xl shadow-md p-8 mb-10">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">👥 Zákazníci</h2>
+    <div className="max-w-xl mx-auto mt-6 bg-[#1a1d27] border border-white/5 rounded-2xl p-8 mb-6">
+      <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Zákazníci</h2>
 
       <input
         type="text"
@@ -77,40 +77,40 @@ function CustomerList() {
         placeholder="Jméno zákazníka"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       />
       <input
         type="text"
         placeholder="Telefon"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       />
       <textarea
         placeholder="Poznámka"
         value={note}
         onChange={(e) => setNote(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       />
       <button
         onClick={handleSubmit}
-        className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-6 rounded-lg w-full transition mb-8"
+        className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm mb-8"
       >
         Přidat zákazníka
       </button>
 
       <ul>
         {customers.filter(c =>
-  c.name.toLowerCase().includes(search.toLowerCase())
-).map(c => (
-         <li key={c.id} className="bg-pink-50 border-l-4 border-pink-300 rounded-lg px-4 py-3 mb-2">
+        c.name.toLowerCase().includes(search.toLowerCase())
+          ).map(c => (
+         <li key={c.id} className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-4 py-3 mb-2">
   <div className="flex justify-between items-center">
     <div 
       className="cursor-pointer flex-1"
       onClick={() => handleSelectCustomer(c)}
     >
-      <div className="font-medium text-gray-800">{c.name} — {c.phone}</div>
-      {c.note && <div className="text-gray-500 text-sm mt-1">📝 {c.note}</div>}
+      <div className="font-medium text-white text-sm">{c.name} — {c.phone}</div>
+        {c.note && <div className="text-gray-600 text-xs mt-1">{c.note}</div>}
     </div>
     <button
       onClick={() => setDeleteId(c.id)}
@@ -124,10 +124,10 @@ function CustomerList() {
     <div className="mt-3 pt-3 border-t border-pink-200">
       
       {customerDetail.upcoming.length > 0 && (
-  <div className="bg-green-50 border-l-4 border-green-400 rounded-lg px-3 py-2 mb-3">
-    <div className="text-green-700 font-medium text-sm mb-1">✅ Nadcházející schůzky</div>
-    {customerDetail.upcoming.map(u => (
-      <div key={u.id} className="text-green-600 text-sm">
+  <div className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-3 py-2 mb-3">
+  <div className="text-blue-400 font-medium text-xs mb-1 tracking-wide uppercase">Nadcházející schůzky</div>
+  ...
+  <div key={u.id} className="text-gray-400 text-xs">
         {u.service_name} — {new Date(u.appointment_date).toLocaleDateString('cs-CZ')} v {u.appointment_time.slice(0, 5)}
       </div>
     ))}
@@ -136,9 +136,9 @@ function CustomerList() {
 
       {customerDetail.history.length > 0 && (
         <div>
-          <div className="text-gray-500 text-xs font-bold uppercase mb-2">Historie návštěv</div>
+          <div className="text-gray-600 text-xs uppercase tracking-widest mb-2">Historie návštěv</div>
           {customerDetail.history.map(h => (
-            <div key={h.id} className="text-gray-500 text-sm mb-1">
+            <div key={h.id} className="text-gray-600 text-xs mb-1">
               {new Date(h.appointment_date).toLocaleDateString('cs-CZ')} — {h.service_name}
             </div>
           ))}
@@ -156,9 +156,9 @@ function CustomerList() {
 
       {deleteId && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-4">
-            <h3 className="text-lg font-bold text-gray-800 mb-2">Smazat zákazníka?</h3>
-            <p className="text-gray-400 mb-6">Tato akce je nevratná.</p>
+          <div className="bg-[#1a1d27] border border-white/5 rounded-2xl p-8 max-w-sm w-full mx-4">
+            <h3 className="text-lg font-medium text-white mb-2 tracking-wide">Smazat zákazníka?</h3>
+              <p className="text-gray-600 text-sm mb-6">Tato akce je nevratná.</p>
             <div className="flex gap-3">
               <button
                 onClick={() => handleDelete(deleteId)}
