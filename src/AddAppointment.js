@@ -51,13 +51,13 @@ function AddAppointment() {
   };
 
  return (
-    <div className="max-w-xl mx-auto mt-10 bg-white rounded-2xl shadow-md p-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Přidat termín</h2>
+    <div className="max-w-xl mx-auto mt-6 bg-[#1a1d27] border border-white/5 rounded-2xl p-8 mb-6">
+      <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Přidat termín</h2>
 
       <select
         value={customerId}
         onChange={(e) => setCustomerId(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       >
         <option value="">Vyber zákazníka</option>
         {customers.map(c => (
@@ -68,7 +68,7 @@ function AddAppointment() {
       <select
         value={serviceName}
         onChange={(e) => setServiceName(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       >
         <option value="">Vyber službu</option>
         {services.map(s => (
@@ -80,26 +80,26 @@ function AddAppointment() {
         type="date"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       />
 
       <input
         type="time"
         value={time}
         onChange={(e) => setTime(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       />
 
       <textarea
         placeholder="Poznámka"
         value={note}
         onChange={(e) => setNote(e.target.value)}
-        className="w-full border border-pink-200 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-pink-400"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       />
 
       <button
         onClick={handleSubmit}
-        className="bg-pink-400 hover:bg-pink-500 text-white font-bold py-3 px-6 rounded-lg w-full transition"
+        className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm"
       >
         Uložit termín
       </button>
