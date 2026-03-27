@@ -47,55 +47,51 @@ function AppointmentList() {
 
   const renderGroup = (groups) => {
     return Object.entries(groups).map(([date, items]) => (
-      <div key={date} className="mb-6">
-        <div className="text-sm font-bold text-pink-400 uppercase tracking-wide mb-2">
-          📆 {date}
-        </div>
-        {items.map(a => (
-          <div key={a.id} className="bg-pink-50 border-l-4 border-pink-300 rounded-lg px-5 py-4 mb-2">
-            <div className="flex justify-between items-center">
-              <strong className="text-gray-800">{a.customer_name}</strong>
-              <span className="text-pink-400 font-medium">{a.service_name}</span>
-            </div>
-            <div className="text-gray-500 text-sm mt-1">
-              ⏰ {a.appointment_time.slice(0, 5)}
-            </div>
-            {a.note && (
-              <div className="text-gray-500 text-sm mt-1">📝 {a.note}</div>
-            )}
-            <button
-              onClick={() => setDeleteId(a.id)}
-              className="text-red-300 hover:text-red-500 text-xs mt-2 transition"
-            >
-              🗑 Smazat
-            </button>
-          </div>
-        ))}
+     <div key={date} className="mb-6">
+  <div className="text-xs font-medium text-blue-500 uppercase tracking-widest mb-3">
+    {date}
+    </div>
+  <div key={a.id} className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-5 py-4 mb-2">
+    <div className="flex justify-between items-center">
+      <strong className="text-white font-medium">{a.customer_name}</strong>
+        <span className="text-blue-400 text-sm">{a.service_name}</span>
+      </div>
+      <div className="text-gray-600 text-xs mt-2">
+          {a.appointment_time.slice(0, 5)}
+      </div>
+          {a.note && (
+      <div className="text-gray-600 text-xs mt-1">{a.note}</div>
+          )}
+       <button onClick={() => setDeleteId(a.id)} className="text-gray-700 hover:text-red-400 text-xs mt-2 transition">
+          Smazat
+        </button>
+      </div>
+        
       </div>
     ));
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white rounded-2xl shadow-md p-8 mb-10">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">📅 Termíny</h2>
+    <div className="max-w-xl mx-auto mt-6 bg-[#1a1d27] border border-white/5 rounded-2xl p-8 mb-6">
+      <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Termíny</h2>
 
-      <h3 className="text-lg font-semibold text-gray-700 mb-4">Tento týden</h3>
+      <h3 className="text-xs font-medium text-gray-600 mb-4 tracking-widest uppercase">Tento týden</h3>
       {upcoming.length === 0 ? (
-        <p className="text-gray-400 mb-4">Žádné termíny tento týden</p>
+        <p className="text-gray-600 mb-4 text-sm">Žádné termíny tento týden</p>
       ) : (
         renderGroup(groupByDate(upcoming))
       )}
 
       {future.length > 0 && (
         <>
-          <h3 className="text-lg font-semibold text-gray-700 mt-6 mb-4">Budoucí termíny</h3>
+          <h3 className="text-xs font-medium text-gray-600 mt-6 mb-4 tracking-widest uppercase">Budoucí termíny</h3>
           <div>{renderGroup(groupByDate(future))}</div>
         </>
       )}
 
       <button
         onClick={() => setShowPast(!showPast)}
-        className="text-gray-400 hover:text-gray-600 text-sm mt-4"
+        className="text-gray-700 hover:text-gray-400 text-xs mt-4 tracking-wide transition"
       >
         {showPast ? '▲ Skrýt historii' : '▼ Zobrazit historii'}
       </button>
@@ -108,9 +104,9 @@ function AppointmentList() {
 
       {deleteId && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-4">
-            <h3 className="text-lg font-bold text-gray-800 mb-2">Smazat termín?</h3>
-            <p className="text-gray-400 mb-6">Tato akce je nevratná.</p>
+          <div className="bg-[#1a1d27] border border-white/5 rounded-2xl p-8 max-w-sm w-full mx-4">
+            <h3 className="text-lg font-medium text-white mb-2 tracking-wide">Smazat termín?</h3>
+              <p className="text-gray-600 text-sm mb-6">Tato akce je nevratná.</p>
             <div className="flex gap-3">
               <button
                 onClick={() => handleDelete(deleteId)}
