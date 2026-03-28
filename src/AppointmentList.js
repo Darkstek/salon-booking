@@ -57,7 +57,7 @@ function AppointmentList() {
             className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
           <div className="flex justify-between items-center">
             <strong className="text-white font-medium">{a.customer_name}</strong>
-            <span className="text-blue-400 text-sm">{a.service_name}</span>
+            <span style={{ color: 'var(--accent)' }} className="text-sm">{a.service_name}</span>
           </div>
           <div className="text-gray-600 text-xs mt-2">
             {a.appointment_time.slice(0, 5)}

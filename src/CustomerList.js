@@ -131,8 +131,8 @@ function CustomerList() {
       {customerDetail.upcoming.length > 0 && (
   <div 
   style={{ borderLeftColor: 'var(--accent)' }}
-className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
-    <div className="text-blue-400 font-medium text-xs mb-1 tracking-wide uppercase">Nadcházející schůzky</div>
+      className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
+    <div style={{ color: 'var(--accent)' }} className="font-medium text-xs mb-1 tracking-wide uppercase">Nadcházející schůzky</div>
     {customerDetail.upcoming.map(u => (
       <div key={u.id} className="text-gray-400 text-xs">
         {u.service_name} — {new Date(u.appointment_date).toLocaleDateString('cs-CZ')} v {u.appointment_time.slice(0, 5)}

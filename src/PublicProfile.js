@@ -39,7 +39,7 @@ function PublicProfile() {
       <div className="max-w-xl mx-auto px-4 mt-8 mb-10">
 
         <div style={{ borderLeftColor: 'var(--accent)' }}
-className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
+          className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
           <h2 className="text-xl font-medium text-white mb-4 tracking-wide">{profile.business_name}</h2>
           {profile.phone && (
             <p className="text-gray-500 text-sm mb-2">Tel: {profile.phone}</p>
@@ -59,7 +59,7 @@ className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb
               <div key={s.id} className="flex justify-between items-center border-b border-white/5 py-3 last:border-0">
                 <span className="text-white text-sm">{s.name}</span>
                 <div className="text-right">
-                  {s.price && <span className="text-blue-400 text-sm font-medium">{s.price} Kč</span>}
+                  {s.price && <span style={{ color: 'var(--accent)' }} className="text-sm font-medium">{s.price} Kč</span>}
                   {s.duration && <span className="text-gray-600 text-xs ml-3">{s.duration} min</span>}
                 </div>
               </div>
