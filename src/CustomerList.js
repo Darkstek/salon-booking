@@ -94,7 +94,8 @@ function CustomerList() {
       />
       <button
         onClick={handleSubmit}
-        className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm mb-8"
+        style={{ backgroundColor: 'var(--accent)' }}
+        className="text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Přidat zákazníka
       </button>
@@ -103,7 +104,9 @@ function CustomerList() {
         {customers.filter(c =>
         c.name.toLowerCase().includes(search.toLowerCase())
           ).map(c => (
-         <li key={c.id} className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-4 py-3 mb-2">
+         <li key={c.id} 
+         style={{ borderLeftColor: 'var(--accent)' }}
+        className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
   <div className="flex justify-between items-center">
     <div 
       className="cursor-pointer flex-1"
@@ -126,7 +129,9 @@ function CustomerList() {
     <div className="mt-3 pt-3 border-t border-white/5">
       
       {customerDetail.upcoming.length > 0 && (
-  <div className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-3 py-2 mb-3">
+  <div 
+  style={{ borderLeftColor: 'var(--accent)' }}
+className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
     <div className="text-blue-400 font-medium text-xs mb-1 tracking-wide uppercase">Nadcházející schůzky</div>
     {customerDetail.upcoming.map(u => (
       <div key={u.id} className="text-gray-400 text-xs">

@@ -99,7 +99,8 @@ function AddAppointment() {
 
       <button
         onClick={handleSubmit}
-        className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm"
+        style={{ backgroundColor: 'var(--accent)' }}
+        className="text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Uložit termín
       </button>

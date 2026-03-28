@@ -38,7 +38,8 @@ function PublicProfile() {
 
       <div className="max-w-xl mx-auto px-4 mt-8 mb-10">
 
-        <div className="bg-[#1a1d27] border border-white/5 border-l-2 border-l-blue-500 rounded-xl px-6 py-6 mb-4">
+        <div style={{ borderLeftColor: 'var(--accent)' }}
+className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
           <h2 className="text-xl font-medium text-white mb-4 tracking-wide">{profile.business_name}</h2>
           {profile.phone && (
             <p className="text-gray-500 text-sm mb-2">Tel: {profile.phone}</p>

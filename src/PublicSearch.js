@@ -41,7 +41,8 @@ function PublicSearch({ onBack }) {
           <div
             key={p.id}
             onClick={() => navigate(`/salon/${p.id}`)}
-            className="bg-[#1a1d27] border border-white/5 border-l-2 border-l-blue-500 rounded-xl px-6 py-5 mb-4 cursor-pointer hover:border-blue-500/50 transition"
+            style={{ borderLeftColor: 'var(--accent)' }}
+            className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2"
           >
             <h2 className="text-base font-medium text-white mb-2">{p.business_name}</h2>
             {p.address && <p className="text-gray-600 text-xs mb-1">Adresa: {p.address}</p>}

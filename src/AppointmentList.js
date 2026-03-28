@@ -52,7 +52,9 @@ function AppointmentList() {
         {date}
       </div>
       {items.map(a => (
-        <div key={a.id} className="bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-5 py-4 mb-2">
+        <div key={a.id} 
+          style={{ borderLeftColor: 'var(--accent)' }}
+            className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
           <div className="flex justify-between items-center">
             <strong className="text-white font-medium">{a.customer_name}</strong>
             <span className="text-blue-400 text-sm">{a.service_name}</span>

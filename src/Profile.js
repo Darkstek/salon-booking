@@ -121,7 +121,8 @@ function Profile({ onThemeChange, theme }) {
       />
       <button
         onClick={handleSubmit}
-        className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm mb-10"
+        style={{ backgroundColor: 'var(--accent)' }}
+        className="text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Uložit profil
       </button>
@@ -153,14 +154,17 @@ function Profile({ onThemeChange, theme }) {
       </div>
       <button
         onClick={handleAddService}
-        className="bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm mb-6"
+        style={{ backgroundColor: 'var(--accent)' }}
+        className="text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Přidat službu
       </button>
 
       <ul>
         {services.map(s => (
-          <li key={s.id} className="flex justify-between items-center bg-[#0f1117] border border-white/5 border-l-2 border-l-blue-500 rounded-lg px-4 py-3 mb-2">
+          <li key={s.id} 
+          style={{ borderLeftColor: 'var(--accent)' }}
+className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
             <div>
               <div className="font-medium text-white text-sm">{s.name}</div>
               <div className="text-gray-600 text-xs">
