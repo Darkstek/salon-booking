@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import API_URL, { fetchWithAuth } from './config';
 
-function Profile() {
+function Profile({ onThemeChange, theme }) {
   const [businessName, setBusinessName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
