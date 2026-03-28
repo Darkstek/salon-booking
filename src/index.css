@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --accent: #4ade80;
-  --accent-hover: #22c55e;
+  :root {
+  --accent: #86efac;
+  --accent-hover: #4ade80;
   --accent-muted: rgba(74, 222, 128, 0.1);
   --accent-border: rgba(74, 222, 128, 0.3);
   --bg-primary: #0a0a0a;
@@ -31,8 +31,8 @@
 }
 
 [data-theme="pink"] {
-  --accent: #f472b6;
-  --accent-hover: #ec4899;
+  --accent: #f9a8d4;
+  --accent-hover: #f472b6;
   --accent-muted: rgba(244, 114, 182, 0.1);
   --accent-border: rgba(244, 114, 182, 0.3);
   --bg-primary: #0f0a0f;
@@ -45,8 +45,8 @@
 }
 
 [data-theme="cyberpunk"] {
-  --accent: #fcee0a;
-  --accent-hover: #eadc00;
+  --accent: #fde047;
+  --accent-hover: #facc15;
   --accent-muted: rgba(252, 238, 10, 0.1);
   --accent-border: rgba(252, 238, 10, 0.3);
   --bg-primary: #0d0d0f;
