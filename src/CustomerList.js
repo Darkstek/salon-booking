@@ -95,7 +95,7 @@ function CustomerList() {
       <button
         onClick={handleSubmit}
         style={{ backgroundColor: 'var(--accent)' }}
-        className="text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
+        className="text-gray-900 font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Přidat zákazníka
       </button>

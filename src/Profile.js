@@ -122,7 +122,7 @@ function Profile({ onThemeChange, theme }) {
       <button
         onClick={handleSubmit}
         style={{ backgroundColor: 'var(--accent)' }}
-        className="text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
+        className="text-gray-900 font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Uložit profil
       </button>
@@ -155,7 +155,7 @@ function Profile({ onThemeChange, theme }) {
       <button
         onClick={handleAddService}
         style={{ backgroundColor: 'var(--accent)' }}
-        className="text-white font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
+        className="text-gray-900 font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Přidat službu
       </button>
@@ -164,7 +164,7 @@ function Profile({ onThemeChange, theme }) {
         {services.map(s => (
           <li key={s.id} 
           style={{ borderLeftColor: 'var(--accent)' }}
-className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
+            className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
             <div>
               <div className="font-medium text-white text-sm">{s.name}</div>
               <div className="text-gray-600 text-xs">
