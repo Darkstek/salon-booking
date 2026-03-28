@@ -62,10 +62,24 @@ if (isGuest) {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      <div className="min-h-screen" style={{ 
+          backgroundColor: 'var(--bg-primary)',
+          backgroundImage: 'url(/nightcity.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+            }}>
         <Toaster position="top-right" />
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: 'var(--bg-primary)',
+          opacity: 0.85,
+          zIndex: 0,
+          pointerEvents: 'none',
+            }} />
         <Header onLogout={handleLogout} theme={theme} onThemeChange={handleThemeChange} />
-        <div className="max-w-2xl mx-auto px-4">
+        <div className="max-w-2xl mx-auto px-4" style={{ position: 'relative', zIndex: 1 }}>
           <Routes>
             <Route path="/" element={
               <>
