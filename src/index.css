@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --accent: #4ade80;
+  --accent-hover: #22c55e;
+  --accent-muted: rgba(74, 222, 128, 0.1);
+  --accent-border: rgba(74, 222, 128, 0.3);
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-card: #141414;
+  --border: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #888888;
+  --text-muted: #444444;
+}
+
+[data-theme="blue"] {
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --accent-muted: rgba(59, 130, 246, 0.1);
+  --accent-border: rgba(59, 130, 246, 0.3);
+  --bg-primary: #0f1117;
+  --bg-secondary: #1a1d27;
+  --bg-card: #0f1117;
+  --border: rgba(255,255,255,0.06);
+  --text-primary: #ffffff;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+}
+
+[data-theme="pink"] {
+  --accent: #f472b6;
+  --accent-hover: #ec4899;
+  --accent-muted: rgba(244, 114, 182, 0.1);
+  --accent-border: rgba(244, 114, 182, 0.3);
+  --bg-primary: #0f0a0f;
+  --bg-secondary: #1a1020;
+  --bg-card: #120d18;
+  --border: rgba(244,114,182,0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #d1a3c0;
+  --text-muted: #9d6b8a;
+}
+
+[data-theme="cyberpunk"] {
+  --accent: #fcee0a;
+  --accent-hover: #eadc00;
+  --accent-muted: rgba(252, 238, 10, 0.1);
+  --accent-border: rgba(252, 238, 10, 0.3);
+  --bg-primary: #0d0d0f;
+  --bg-secondary: #111116;
+  --bg-card: #0a0a0c;
+  --border: rgba(252,238,10,0.08);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0b0;
+  --text-muted: #505060;
+}

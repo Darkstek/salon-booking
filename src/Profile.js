@@ -176,6 +176,38 @@ function Profile() {
           </li>
         ))}
       </ul>
+
+      {/* Theme picker */}
+      <div className="mt-10">
+        <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Vzhled</h2>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { id: 'green', label: 'Default', color: '#4ade80' },
+            { id: 'blue', label: 'Blue', color: '#3b82f6' },
+            { id: 'pink', label: 'Pink', color: '#f472b6' },
+            { id: 'cyberpunk', label: 'Cyberpunk', color: '#fcee0a' },
+          ].map(t => (
+            <button
+              key={t.id}
+              onClick={() => onThemeChange(t.id)}
+              style={{
+                borderColor: theme === t.id ? t.color : 'rgba(255,255,255,0.05)',
+                color: theme === t.id ? t.color : '#444',
+                backgroundColor: theme === t.id ? `${t.color}15` : 'transparent',
+              }}
+              className="border rounded-lg py-3 px-4 text-sm tracking-wide transition text-left"
+            >
+              <div className="flex items-center gap-3">
+                <div
+                  style={{ backgroundColor: t.color }}
+                  className="w-3 h-3 rounded-full"
+                />
+                {t.label}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Header from './Header';
@@ -15,9 +15,23 @@ function App() {
     !!localStorage.getItem('token')
   );
   const [isGuest, setIsGuest] = useState(false);
+  const [theme, setTheme] = useState(
+    localStorage.getItem('theme') || 'green'
+  );
+
+  useEffect(() => {
+    // Při každé změně theme nastavíme data-theme na <html> element
+    if (theme === 'green') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const handleLogin = () => setIsLoggedIn(true);
 
+  const handleThemeChange = (newTheme) => setTheme(newTheme);
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
@@ -48,9 +62,9 @@ if (isGuest) {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
         <Toaster position="top-right" />
-        <Header onLogout={handleLogout} />
+        <Header onLogout={handleLogout} theme={theme} onThemeChange={handleThemeChange} />
         <div className="max-w-2xl mx-auto px-4">
           <Routes>
             <Route path="/" element={
@@ -60,7 +74,7 @@ if (isGuest) {
               </>
             } />
             <Route path="/zakaznici" element={<CustomerList />} />
-            <Route path="/profil" element={<Profile />} /> {/* 👈 NOVÉ: routa pro profil */}
+            <Route path="/profil" element={<Profile onThemeChange={handleThemeChange} theme={theme} />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>

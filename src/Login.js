@@ -87,11 +87,11 @@ function Login({ onLogin, onGuest }) {
 
     
         <div className="border-t border-white/5 pt-4 mt-2">
-  <p className="text-center text-gray-600 text-xs mb-3 tracking-wide">Hledáte salon?</p>
-  <button onClick={onGuest} className="w-full bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 px-6 rounded-lg transition text-sm tracking-wide">
-    Hledat salon
-  </button>
-</div>
+          <p className="text-center text-gray-600 text-xs mb-3 tracking-wide">Hledáte salon?</p>
+          <button onClick={onGuest} className="w-full bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 px-6 rounded-lg transition text-sm tracking-wide">
+            Hledat salon
+          </button>
+        </div>
        
 
       </div>

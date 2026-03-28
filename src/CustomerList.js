@@ -110,8 +110,8 @@ function CustomerList() {
       onClick={() => handleSelectCustomer(c)}
     >
       <div className="font-medium text-white text-sm">
-  {c.name}{c.phone ? ` — ${c.phone}` : ''}
-</div>
+        {c.name}{c.phone ? ` — ${c.phone}` : ''}
+      </div>
         {c.note && <div className="text-gray-600 text-xs mt-1">{c.note}</div>}
     </div>
     <button
