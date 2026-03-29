@@ -101,9 +101,10 @@ function CustomerList() {
       </button>
 
       <ul>
-        {customers.filter(c =>
-        c.name.toLowerCase().includes(search.toLowerCase())
-          ).map(c => (
+        {customers
+            .filter(c => c.name.toLowerCase().includes(search.toLowerCase()))
+            .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'cs'))
+            .map(c => (
          <li key={c.id} 
          style={{ borderLeftColor: 'var(--accent)' }}
         className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
