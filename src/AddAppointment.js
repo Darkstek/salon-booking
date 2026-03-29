@@ -2,17 +2,6 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import API_URL, { fetchWithAuth } from './config';
 
-const services = [
-  { id: 1, name: 'Pedikúra' },
-  { id: 2, name: 'Manikúra' },
-  { id: 3, name: 'Úprava nehtů' },
-  { id: 4, name: 'Ošetření zarostlého nehtu' },
-  { id: 5, name: 'Gellak' },
-  { id: 6, name: 'Pedikúra a gellak' },
-  { id: 7, name: 'Aplikace titanové nitě' },
-  { id: 8, name: 'Aplikace nehtové špony' },
-];
-
 function AddAppointment() {
   const [customers, setCustomers] = useState([]);
   const [customerId, setCustomerId] = useState('');
@@ -20,12 +9,26 @@ function AddAppointment() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [note, setNote] = useState('');
+  const [services, setServices] = useState([]);
+  const [customService, setCustomService] = useState('');
+  const [useCustom, setUseCustom] = useState(false);
 
   useEffect(() => {
-    fetchWithAuth(`${API_URL}/api/customers`)
-      .then(res => res.json())
-      .then(data => setCustomers(data));
-  }, []);
+  fetchWithAuth(`${API_URL}/api/customers`)
+    .then(res => res.json())
+    .then(data => setCustomers(data));
+
+  // Načteme služby z profilu
+  fetchWithAuth(`${API_URL}/api/profile`)
+    .then(res => res.json())
+    .then(profile => {
+      if (profile?.user_id) {
+        fetch(`${API_URL}/api/services/${profile.user_id}`)
+          .then(res => res.json())
+          .then(data => setServices(data));
+      }
+    });
+    }, []);
 
   const handleSubmit = async () => {
     if (!customerId || !serviceName || !date || !time) return;
@@ -47,7 +50,7 @@ function AddAppointment() {
     setDate('');
     setTime('');
     setNote('');
-    toast.success('Termín uložen! ✅');
+    toast.success('Termín uložen!');
   };
 
  return (
@@ -65,26 +68,52 @@ function AddAppointment() {
         ))}
       </select>
 
+        {!useCustom ? (
       <select
         value={serviceName}
         onChange={(e) => setServiceName(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-2 focus:outline-none focus:border-white/20 text-sm"
       >
-        <option value="">Vyber službu</option>
+      <option value="">Vyber službu</option>
         {services.map(s => (
-          <option key={s.id} value={s.name}>{s.name}</option>
-        ))}
+      <option key={s.id} value={s.name}>{s.name}</option>
+       ))}
       </select>
+      ) : (
+      <input
+        type="text"
+        placeholder="Napiš název služby"
+        value={customService}
+        onChange={(e) => {
+        setCustomService(e.target.value);
+        setServiceName(e.target.value);
+      }}
+        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-2 focus:outline-none focus:border-white/20 text-sm"
+      />
+      )}
+      <button
+        onClick={() => {
+        setUseCustom(!useCustom);
+        setServiceName('');
+        setCustomService('');
+      }}
+        className="text-xs mb-4 tracking-wide transition"
+        style={{ color: 'var(--accent)' }}
+      >
+        {useCustom ? '← Vybrat ze seznamu' : '+ Zadat vlastní službu'}
+      </button>
 
       <input
         type="date"
         value={date}
+        placeholder="Vyber datum"
         onChange={(e) => setDate(e.target.value)}
         className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
       />
 
       <input
         type="time"
+        placeholder="Vyber čas"
         value={time}
         onChange={(e) => setTime(e.target.value)}
         className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
