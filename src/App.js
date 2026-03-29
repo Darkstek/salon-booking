@@ -82,14 +82,16 @@ if (isGuest) {
           backgroundAttachment: 'fixed',
             }}>
         <Toaster position="top-right" />
-        <div style={{
+        {mode !== 'light' && (
+      <div style={{
           position: 'fixed',
           inset: 0,
           backgroundColor: 'var(--bg-primary)',
-          opacity: mode === 'light' ? 0.95 : 0.65,
+          opacity: 0.65,
           zIndex: 0,
           pointerEvents: 'none',
-            }} />
+              }} />
+            )} 
         <Header onLogout={handleLogout} theme={theme} onThemeChange={handleThemeChange} />
         <div className="max-w-2xl mx-auto px-4" style={{ position: 'relative', zIndex: 1 }}>
           <Routes>
