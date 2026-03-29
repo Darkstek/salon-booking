@@ -16,11 +16,13 @@ function PublicProfile() {
         const found = data.find(p => p.id === parseInt(id));
         setProfile(found);
         setLoading(false);
-      });
 
-    fetch(`${API_URL}/api/services/${id}`)
-      .then(res => res.json())
-      .then(data => setServices(data));
+        if (found?.user_id) {
+          fetch(`${API_URL}/api/services/${found.user_id}`)
+            .then(res => res.json())
+            .then(data => setServices(data));
+        }
+      });
   }, [id]);
 
   if (loading) return (
@@ -39,7 +41,7 @@ function PublicProfile() {
       <div className="max-w-xl mx-auto px-4 mt-8 mb-10">
 
         <div style={{ borderLeftColor: 'var(--accent)' }}
-          className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
+          className="bg-[#1a1d27] border border-white/5 border-l-2 rounded-xl px-6 py-6 mb-4">
           <h2 className="text-xl font-medium text-white mb-4 tracking-wide">{profile.business_name}</h2>
           {profile.phone && (
             <p className="text-gray-500 text-sm mb-2">Tel: {profile.phone}</p>
@@ -71,7 +73,7 @@ function PublicProfile() {
           onClick={() => navigate(-1)}
           className="text-gray-600 hover:text-gray-400 text-xs transition w-full text-center tracking-wide"
         >
-          Zpet na seznam salonu
+          Zpět na seznam salonů
         </button>
       </div>
     </div>
