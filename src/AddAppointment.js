@@ -172,16 +172,29 @@ function AddAppointment() {
         {useCustom ? '← Vybrat ze seznamu' : '+ Zadat vlastní službu'}
       </button>
 
-      <label style={labelStyle} className="text-xs tracking-widest uppercase block mb-1">
+    <label style={labelStyle} className="text-xs tracking-widest uppercase block mb-1">
         Datum
       </label>
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        style={inputStyle}
-        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
-      />
+      <div style={{ position: 'relative' }}>
+        <input
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          style={{...inputStyle, paddingRight: '2.5rem'}}
+          className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
+        />
+        <span style={{
+          position: 'absolute',
+          right: '12px',
+          top: '50%',
+          transform: 'translateY(-60%)',
+          pointerEvents: 'none',
+          color: 'var(--text-muted)',
+          fontSize: '14px',
+        }}>
+          📅
+        </span>
+      </div>
 
       <label style={labelStyle} className="text-xs tracking-widest uppercase block mb-1">
         Čas
