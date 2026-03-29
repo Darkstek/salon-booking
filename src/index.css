@@ -87,3 +87,11 @@ input[type="time"]::-webkit-clock-picker-indicator {
   filter: invert(0);
   opacity: 0.6;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+[data-mode="light"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
