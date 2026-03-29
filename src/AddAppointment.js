@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import DatePicker from 'react-date-picker';
+import TimePicker from 'react-time-picker';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-time-picker/dist/TimePicker.css';
 import toast from 'react-hot-toast';
 import API_URL, { fetchWithAuth } from './config';
 
@@ -6,7 +10,7 @@ function AddAppointment() {
   const [customers, setCustomers] = useState([]);
   const [customerId, setCustomerId] = useState('');
   const [serviceName, setServiceName] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(null);
   const [time, setTime] = useState('');
   const [note, setNote] = useState('');
   const [services, setServices] = useState([]);
@@ -36,17 +40,17 @@ function AddAppointment() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-      customer_id: customerId,
-      service_name: serviceName,
-      appointment_date: date,
-      appointment_time: time,
-      note,
+        customer_id: customerId,
+        service_name: serviceName,
+        appointment_date: date ? date.toISOString().split('T')[0] : '',
+        appointment_time: time,
+        note,
       }),
     });
 
     setCustomerId('');
     setServiceName('');
-    setDate('');
+    setDate(null);
     setTime('');
     setNote('');
     toast.success('Termín uložen!');
@@ -57,7 +61,6 @@ function AddAppointment() {
     borderColor: 'var(--border)',
     color: 'var(--text-primary)',
     borderRadius: 'var(--radius-sm)',
-    colorScheme: 'dark',
   };
 
   return (
@@ -123,21 +126,26 @@ function AddAppointment() {
         {useCustom ? '← Vybrat ze seznamu' : '+ Zadat vlastní službu'}
       </button>
 
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        style={inputStyle}
-        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
-          />
-
-      <input
-        type="time"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
-        style={inputStyle}
-        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
+      <div className="w-full mb-4">
+        <DatePicker
+          onChange={setDate}
+          value={date}
+          format="dd.MM.yyyy"
+          clearIcon={null}
+          className="w-full"
         />
+      </div>
+
+      <div className="w-full mb-4">
+        <TimePicker
+          onChange={setTime}
+          value={time}
+          clearIcon={null}
+          clockIcon={null}
+          format="HH:mm"
+          className="w-full"
+        />
+      </div>
 
       <textarea
         placeholder="Poznámka"
