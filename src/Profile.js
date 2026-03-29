@@ -186,10 +186,11 @@ function Profile({ onThemeChange, theme }) {
         <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Vzhled</h2>
         <div className="grid grid-cols-2 gap-3">
           {[
-            { id: 'green', label: 'Default', color: '#4ade80' },
-            { id: 'blue', label: 'Blue', color: '#3b82f6' },
-            { id: 'pink', label: 'Pink', color: '#f472b6' },
-            { id: 'cyberpunk', label: 'Cyberpunk', color: '#fcee0a' },
+            { id: 'green', label: 'Default', color: '#86efac' },
+            { id: 'blue', label: 'Blue', color: '#60a5fa' },
+            { id: 'pink', label: 'Pink', color: '#f9a8d4' },
+            { id: 'cyberpunk', label: 'Cyberpunk', color: '#fde047' },
+            { id: 'light', label: 'Light', color: '#22c55e' },
           ].map(t => (
             <button
               key={t.id}
