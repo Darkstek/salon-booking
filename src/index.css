@@ -47,13 +47,14 @@
 
 /* Light mód - přepíše pozadí a texty */
 [data-mode="light"] {
-  --bg-primary: #f1f5f9;
-  --bg-secondary: #ffffff;
-  --bg-card: #ffffff;
+  --bg-primary: #e8edf2;
+  --bg-secondary: #f0f4f8;
+  --bg-card: #f5f8fb;
   --border: rgba(0, 0, 0, 0.08);
-  --text-primary: #111111;
+  --text-primary: #1a1a2e;
   --text-secondary: #374151;
   --text-muted: #6b7280;
+}
 }
 
 /* Plynulé přepínání */
