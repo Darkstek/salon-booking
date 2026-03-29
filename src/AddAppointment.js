@@ -57,6 +57,7 @@ function AddAppointment() {
     borderColor: 'var(--border)',
     color: 'var(--text-primary)',
     borderRadius: 'var(--radius-sm)',
+    colorScheme: 'dark',
   };
 
   return (
