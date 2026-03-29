@@ -86,7 +86,7 @@ if (isGuest) {
           position: 'fixed',
           inset: 0,
           backgroundColor: 'var(--bg-primary)',
-          opacity: mode === 'light' ? 0.85 : 0.65,
+          opacity: mode === 'light' ? 0.1 : 0.65,
           zIndex: 0,
           pointerEvents: 'none',
               }} />
