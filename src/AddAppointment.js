@@ -1,8 +1,4 @@
 import { useState, useEffect } from 'react';
-import DatePicker from 'react-date-picker';
-import TimePicker from 'react-time-picker';
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-time-picker/dist/TimePicker.css';
 import toast from 'react-hot-toast';
 import API_URL, { fetchWithAuth } from './config';
 
@@ -10,7 +6,7 @@ function AddAppointment() {
   const [customers, setCustomers] = useState([]);
   const [customerId, setCustomerId] = useState('');
   const [serviceName, setServiceName] = useState('');
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [note, setNote] = useState('');
   const [services, setServices] = useState([]);
@@ -42,7 +38,7 @@ function AddAppointment() {
       body: JSON.stringify({
         customer_id: customerId,
         service_name: serviceName,
-        appointment_date: date ? date.toISOString().split('T')[0] : '',
+        appointment_date: date,
         appointment_time: time,
         note,
       }),
@@ -50,7 +46,7 @@ function AddAppointment() {
 
     setCustomerId('');
     setServiceName('');
-    setDate(null);
+    setDate('');
     setTime('');
     setNote('');
     toast.success('Termín uložen!');
@@ -61,6 +57,10 @@ function AddAppointment() {
     borderColor: 'var(--border)',
     color: 'var(--text-primary)',
     borderRadius: 'var(--radius-sm)',
+  };
+
+  const labelStyle = {
+    color: 'var(--text-muted)',
   };
 
   return (
@@ -126,26 +126,27 @@ function AddAppointment() {
         {useCustom ? '← Vybrat ze seznamu' : '+ Zadat vlastní službu'}
       </button>
 
-      <div className="w-full mb-4">
-        <DatePicker
-          onChange={setDate}
-          value={date}
-          format="dd.MM.yyyy"
-          clearIcon={null}
-          className="w-full"
-        />
-      </div>
+      <label style={labelStyle} className="text-xs tracking-widest uppercase block mb-1">
+        Datum
+      </label>
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
+      />
 
-      <div className="w-full mb-4">
-        <TimePicker
-          onChange={setTime}
-          value={time}
-          clearIcon={null}
-          clockIcon={null}
-          format="HH:mm"
-          className="w-full"
-        />
-      </div>
+      <label style={labelStyle} className="text-xs tracking-widest uppercase block mb-1">
+        Čas
+      </label>
+      <input
+        type="time"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
+      />
 
       <textarea
         placeholder="Poznámka"
