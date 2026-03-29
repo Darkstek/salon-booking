@@ -108,7 +108,7 @@ function AddAppointment() {
             setCustomerSearch(c.name);
           }}
           style={{
-            color: customerId == c.id ? 'var(--accent)' : 'var(--text-primary)',
+            color: customerId === String(c.id) ? 'var(--accent)' : 'var(--text-primary)',
             borderBottomColor: 'var(--border)',
           }}
           className="px-4 py-2 text-sm cursor-pointer hover:opacity-70 transition border-b last:border-0"
