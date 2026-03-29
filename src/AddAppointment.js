@@ -14,21 +14,20 @@ function AddAppointment() {
   const [useCustom, setUseCustom] = useState(false);
 
   useEffect(() => {
-  fetchWithAuth(`${API_URL}/api/customers`)
-    .then(res => res.json())
-    .then(data => setCustomers(data));
+    fetchWithAuth(`${API_URL}/api/customers`)
+      .then(res => res.json())
+      .then(data => setCustomers(data));
 
-  // Načteme služby z profilu
-  fetchWithAuth(`${API_URL}/api/profile`)
-    .then(res => res.json())
-    .then(profile => {
-      if (profile?.user_id) {
-        fetch(`${API_URL}/api/services/${profile.user_id}`)
-          .then(res => res.json())
-          .then(data => setServices(data));
-      }
-    });
-    }, []);
+    fetchWithAuth(`${API_URL}/api/profile`)
+      .then(res => res.json())
+      .then(profile => {
+        if (profile?.user_id) {
+          fetch(`${API_URL}/api/services/${profile.user_id}`)
+            .then(res => res.json())
+            .then(data => setServices(data));
+        }
+      });
+  }, []);
 
   const handleSubmit = async () => {
     if (!customerId || !serviceName || !date || !time) return;
@@ -53,14 +52,31 @@ function AddAppointment() {
     toast.success('Termín uložen!');
   };
 
- return (
-    <div className="max-w-xl mx-auto mt-6 bg-[#1a1d27] border border-white/5 rounded-2xl p-8 mb-6">
-      <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Přidat termín</h2>
+  const inputStyle = {
+    backgroundColor: 'var(--bg-card)',
+    borderColor: 'var(--border)',
+    color: 'var(--text-primary)',
+    borderRadius: 'var(--radius-sm)',
+  };
+
+  return (
+    <div
+      style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderColor: 'var(--border)',
+        borderRadius: 'var(--radius)',
+      }}
+      className="max-w-xl mx-auto mt-6 border p-8 mb-6"
+    >
+      <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
+        Přidat termín
+      </h2>
 
       <select
         value={customerId}
         onChange={(e) => setCustomerId(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       >
         <option value="">Vyber zákazníka</option>
         {customers.map(c => (
@@ -68,47 +84,51 @@ function AddAppointment() {
         ))}
       </select>
 
-        {!useCustom ? (
-      <select
-        value={serviceName}
-        onChange={(e) => setServiceName(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-2 focus:outline-none focus:border-white/20 text-sm"
-      >
-      <option value="">Vyber službu</option>
-        {services.map(s => (
-      <option key={s.id} value={s.name}>{s.name}</option>
-       ))}
-      </select>
+      {!useCustom ? (
+        <select
+          value={serviceName}
+          onChange={(e) => setServiceName(e.target.value)}
+          style={inputStyle}
+          className="w-full border px-4 py-3 mb-2 focus:outline-none text-sm"
+        >
+          <option value="">Vyber službu</option>
+          {services.map(s => (
+            <option key={s.id} value={s.name}>{s.name}</option>
+          ))}
+        </select>
       ) : (
-      <input
-        type="text"
-        placeholder="Napiš název služby"
-        value={customService}
-        onChange={(e) => {
-        setCustomService(e.target.value);
-        setServiceName(e.target.value);
-      }}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-2 focus:outline-none focus:border-white/20 text-sm"
-      />
+        <input
+          type="text"
+          placeholder="Napiš název služby"
+          value={customService}
+          onChange={(e) => {
+            setCustomService(e.target.value);
+            setServiceName(e.target.value);
+          }}
+          style={inputStyle}
+          className="w-full border px-4 py-3 mb-2 focus:outline-none text-sm"
+        />
       )}
+
       <button
         onClick={() => {
-        setUseCustom(!useCustom);
-        setServiceName('');
-        setCustomService('');
-      }}
-        className="text-xs mb-4 tracking-wide transition"
+          setUseCustom(!useCustom);
+          setServiceName('');
+          setCustomService('');
+        }}
         style={{ color: 'var(--accent)' }}
+        className="text-xs mb-4 tracking-wide transition hover:opacity-80"
       >
         {useCustom ? '← Vybrat ze seznamu' : '+ Zadat vlastní službu'}
       </button>
 
       <input
         type="date"
-        value={date}
         placeholder="Vyber datum"
+        value={date}
         onChange={(e) => setDate(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
 
       <input
@@ -116,20 +136,26 @@ function AddAppointment() {
         placeholder="Vyber čas"
         value={time}
         onChange={(e) => setTime(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
 
       <textarea
         placeholder="Poznámka"
         value={note}
         onChange={(e) => setNote(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-6 focus:outline-none text-sm"
       />
 
       <button
         onClick={handleSubmit}
-        style={{ backgroundColor: 'var(--accent)' }}
-        className="text-gray-900 font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
+        style={{
+          backgroundColor: 'var(--accent)',
+          borderRadius: 'var(--radius-sm)',
+          clipPath: 'var(--btn-clip)',
+        }}
+        className="text-gray-900 font-medium py-3 px-6 w-full transition tracking-wide text-sm hover:opacity-90"
       >
         Uložit termín
       </button>

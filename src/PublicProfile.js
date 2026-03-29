@@ -16,7 +16,6 @@ function PublicProfile() {
         const found = data.find(p => p.id === parseInt(id));
         setProfile(found);
         setLoading(false);
-
         if (found?.user_id) {
           fetch(`${API_URL}/api/services/${found.user_id}`)
             .then(res => res.json())
@@ -26,43 +25,91 @@ function PublicProfile() {
   }, [id]);
 
   if (loading) return (
-    <div className="text-center mt-10 text-gray-600 text-sm tracking-wide">Načítám...</div>
+    <div style={{ color: 'var(--text-muted)' }} className="text-center mt-10 text-sm tracking-wide">
+      Načítám...
+    </div>
   );
   if (!profile) return (
-    <div className="text-center mt-10 text-gray-600 text-sm tracking-wide">Salon nenalezen</div>
+    <div style={{ color: 'var(--text-muted)' }} className="text-center mt-10 text-sm tracking-wide">
+      Salon nenalezen
+    </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#0f1117]">
-      <div className="bg-[#0f1117] border-b border-white/5 py-6 text-center">
-        <h1 className="text-xl font-medium text-white tracking-widest uppercase">Salon Booking</h1>
+    <div style={{ backgroundColor: 'var(--bg-primary)' }} className="min-h-screen">
+      <div
+        style={{
+          backgroundColor: 'var(--bg-secondary)',
+          borderBottom: '1px solid var(--border)',
+        }}
+        className="py-6 text-center"
+      >
+        <h1 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium tracking-widest uppercase">
+          Salon Booking
+        </h1>
       </div>
 
       <div className="max-w-xl mx-auto px-4 mt-8 mb-10">
 
-        <div style={{ borderLeftColor: 'var(--accent)' }}
-          className="bg-[#1a1d27] border border-white/5 border-l-2 rounded-xl px-6 py-6 mb-4">
-          <h2 className="text-xl font-medium text-white mb-4 tracking-wide">{profile.business_name}</h2>
+        <div
+          style={{
+            borderLeftColor: 'var(--accent)',
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border)',
+            borderRadius: 'var(--radius)',
+          }}
+          className="border border-l-2 px-6 py-6 mb-4"
+        >
+          <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-4 tracking-wide">
+            {profile.business_name}
+          </h2>
           {profile.phone && (
-            <p className="text-gray-500 text-sm mb-2">Tel: {profile.phone}</p>
+            <p style={{ color: 'var(--text-secondary)' }} className="text-sm mb-2">
+              Tel: {profile.phone}
+            </p>
           )}
           {profile.address && (
-            <p className="text-gray-500 text-sm mb-2">Adresa: {profile.address}</p>
+            <p style={{ color: 'var(--text-secondary)' }} className="text-sm mb-2">
+              Adresa: {profile.address}
+            </p>
           )}
           {profile.description && (
-            <p className="text-gray-600 text-sm mt-4 border-t border-white/5 pt-4">{profile.description}</p>
+            <p style={{ color: 'var(--text-muted)', borderTopColor: 'var(--border)' }} className="text-sm mt-4 border-t pt-4">
+              {profile.description}
+            </p>
           )}
         </div>
 
         {services.length > 0 && (
-          <div className="bg-[#1a1d27] border border-white/5 rounded-xl px-6 py-6 mb-6">
-            <h3 className="text-xs font-medium text-gray-600 mb-4 tracking-widest uppercase">Nabízené služby</h3>
+          <div
+            style={{
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border)',
+              borderRadius: 'var(--radius)',
+            }}
+            className="border px-6 py-6 mb-6"
+          >
+            <h3 style={{ color: 'var(--text-muted)' }} className="text-xs font-medium mb-4 tracking-widest uppercase">
+              Nabízené služby
+            </h3>
             {services.map(s => (
-              <div key={s.id} className="flex justify-between items-center border-b border-white/5 py-3 last:border-0">
-                <span className="text-white text-sm">{s.name}</span>
+              <div
+                key={s.id}
+                style={{ borderBottomColor: 'var(--border)' }}
+                className="flex justify-between items-center border-b py-3 last:border-0"
+              >
+                <span style={{ color: 'var(--text-primary)' }} className="text-sm">{s.name}</span>
                 <div className="text-right">
-                  {s.price && <span style={{ color: 'var(--accent)' }} className="text-sm font-medium">{s.price} Kč</span>}
-                  {s.duration && <span className="text-gray-600 text-xs ml-3">{s.duration} min</span>}
+                  {s.price && (
+                    <span style={{ color: 'var(--accent)' }} className="text-sm font-medium">
+                      {s.price} Kč
+                    </span>
+                  )}
+                  {s.duration && (
+                    <span style={{ color: 'var(--text-muted)' }} className="text-xs ml-3">
+                      {s.duration} min
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
@@ -71,7 +118,8 @@ function PublicProfile() {
 
         <button
           onClick={() => navigate(-1)}
-          className="text-gray-600 hover:text-gray-400 text-xs transition w-full text-center tracking-wide"
+          style={{ color: 'var(--text-muted)' }}
+          className="hover:opacity-80 text-xs transition w-full text-center tracking-wide"
         >
           Zpět na seznam salonů
         </button>

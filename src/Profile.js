@@ -40,14 +40,8 @@ function Profile({ onThemeChange, theme }) {
   const handleSubmit = async () => {
     const response = await fetchWithAuth(`${API_URL}/api/profile`, {
       method: 'POST',
-      body: JSON.stringify({
-        business_name: businessName,
-        phone,
-        address,
-        description
-      }),
+      body: JSON.stringify({ business_name: businessName, phone, address, description }),
     });
-
     if (response.ok) {
       toast.success('Profil uložen!');
     } else {
@@ -57,7 +51,6 @@ function Profile({ onThemeChange, theme }) {
 
   const handleAddService = async () => {
     if (!serviceName) return;
-
     const response = await fetchWithAuth(`${API_URL}/api/services`, {
       method: 'POST',
       body: JSON.stringify({
@@ -66,7 +59,6 @@ function Profile({ onThemeChange, theme }) {
         duration: serviceDuration ? parseInt(serviceDuration) : null,
       }),
     });
-
     const newService = await response.json();
     setServices([...services, newService]);
     setServiceName('');
@@ -76,65 +68,94 @@ function Profile({ onThemeChange, theme }) {
   };
 
   const handleDeleteService = async (id) => {
-    await fetchWithAuth(`${API_URL}/api/services/${id}`, {
-      method: 'DELETE',
-    });
+    await fetchWithAuth(`${API_URL}/api/services/${id}`, { method: 'DELETE' });
     setServices(services.filter(s => s.id !== id));
     toast.success('Služba smazána!');
   };
 
+  const inputStyle = {
+    backgroundColor: 'var(--bg-card)',
+    borderColor: 'var(--border)',
+    color: 'var(--text-primary)',
+    borderRadius: 'var(--radius-sm)',
+  };
+
+  const btnStyle = {
+    backgroundColor: 'var(--accent)',
+    borderRadius: 'var(--radius-sm)',
+    clipPath: 'var(--btn-clip)',
+  };
+
   if (loading) return (
-    <div className="text-center mt-10 text-gray-600 tracking-wide text-sm">Načítám...</div>
+    <div style={{ color: 'var(--text-muted)' }} className="text-center mt-10 tracking-wide text-sm">
+      Načítám...
+    </div>
   );
 
   return (
-    <div className="max-w-xl mx-auto mt-6 bg-[#1a1d27] border border-white/5 rounded-2xl p-8 mb-6">
-      <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Můj profil</h2>
+    <div
+      style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderColor: 'var(--border)',
+        borderRadius: 'var(--radius)',
+      }}
+      className="max-w-xl mx-auto mt-6 border p-8 mb-6"
+    >
+      <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
+        Můj profil
+      </h2>
 
       <input
         type="text"
         placeholder="Název podniku"
         value={businessName}
         onChange={(e) => setBusinessName(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
       <input
         type="text"
         placeholder="Telefon"
         value={phone}
         onChange={(e) => setPhone(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
       <input
         type="text"
         placeholder="Adresa"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
       <textarea
         placeholder="Popis (co nabízíte, otevírací doba...)"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         rows={4}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-6 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-6 focus:outline-none text-sm"
       />
       <button
         onClick={handleSubmit}
-        style={{ backgroundColor: 'var(--accent)' }}
-        className="text-gray-900 font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
+        style={btnStyle}
+        className="text-gray-900 font-medium py-3 px-6 w-full transition tracking-wide text-sm hover:opacity-90 mb-10"
       >
         Uložit profil
       </button>
 
-      <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Moje služby</h2>
+      <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
+        Moje služby
+      </h2>
 
       <input
         type="text"
         placeholder="Název služby (např. Pedikúra)"
         value={serviceName}
         onChange={(e) => setServiceName(e.target.value)}
-        className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 mb-4 focus:outline-none focus:border-blue-500/50 text-sm"
+        style={inputStyle}
+        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
       <div className="flex gap-3 mb-4">
         <input
@@ -142,38 +163,47 @@ function Profile({ onThemeChange, theme }) {
           placeholder="Cena (Kč)"
           value={servicePrice}
           onChange={(e) => setServicePrice(e.target.value)}
-          className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500/50 text-sm"
+          style={inputStyle}
+          className="w-full border px-4 py-3 focus:outline-none text-sm"
         />
         <input
           type="number"
           placeholder="Délka (min)"
           value={serviceDuration}
           onChange={(e) => setServiceDuration(e.target.value)}
-          className="w-full border border-white/10 bg-[#0f1117] text-white rounded-lg px-4 py-3 focus:outline-none focus:border-blue-500/50 text-sm"
+          style={inputStyle}
+          className="w-full border px-4 py-3 focus:outline-none text-sm"
         />
       </div>
       <button
         onClick={handleAddService}
-        style={{ backgroundColor: 'var(--accent)' }}
-        className="text-gray-900 font-medium py-3 px-6 rounded-lg w-full transition tracking-wide text-sm hover:opacity-90"
+        style={btnStyle}
+        className="text-gray-900 font-medium py-3 px-6 w-full transition tracking-wide text-sm hover:opacity-90 mb-6"
       >
         Přidat službu
       </button>
 
       <ul>
         {services.map(s => (
-          <li key={s.id} 
-          style={{ borderLeftColor: 'var(--accent)' }}
-            className="bg-[#0f1117] border border-white/5 border-l-2 rounded-lg px-4 py-3 mb-2">
+          <li key={s.id}
+            style={{
+              borderLeftColor: 'var(--accent)',
+              backgroundColor: 'var(--bg-card)',
+              borderColor: 'var(--border)',
+              borderRadius: 'var(--radius-sm)',
+            }}
+            className="flex justify-between items-center border border-l-2 px-4 py-3 mb-2"
+          >
             <div>
-              <div className="font-medium text-white text-sm">{s.name}</div>
-              <div className="text-gray-600 text-xs">
+              <div style={{ color: 'var(--text-primary)' }} className="font-medium text-sm">{s.name}</div>
+              <div style={{ color: 'var(--text-muted)' }} className="text-xs">
                 {s.price && `${s.price} Kč`} {s.duration && `· ${s.duration} min`}
               </div>
             </div>
             <button
               onClick={() => handleDeleteService(s.id)}
-              className="text-gray-700 hover:text-red-400 text-xs transition ml-4"
+              style={{ color: 'var(--text-muted)' }}
+              className="hover:text-red-400 text-xs transition ml-4"
             >
               Smazat
             </button>
@@ -181,9 +211,10 @@ function Profile({ onThemeChange, theme }) {
         ))}
       </ul>
 
-      {/* Theme picker */}
       <div className="mt-10">
-        <h2 className="text-xl font-medium text-white mb-6 tracking-widest uppercase">Vzhled</h2>
+        <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
+          Vzhled
+        </h2>
         <div className="grid grid-cols-2 gap-3">
           {[
             { id: 'green', label: 'Default', color: '#86efac' },
@@ -196,17 +227,15 @@ function Profile({ onThemeChange, theme }) {
               key={t.id}
               onClick={() => onThemeChange(t.id)}
               style={{
-                borderColor: theme === t.id ? t.color : 'rgba(255,255,255,0.05)',
-                color: theme === t.id ? t.color : '#444',
+                borderColor: theme === t.id ? t.color : 'var(--border)',
+                color: theme === t.id ? t.color : 'var(--text-muted)',
                 backgroundColor: theme === t.id ? `${t.color}15` : 'transparent',
+                borderRadius: 'var(--radius-sm)',
               }}
-              className="border rounded-lg py-3 px-4 text-sm tracking-wide transition text-left"
+              className="border py-3 px-4 text-sm tracking-wide transition text-left"
             >
               <div className="flex items-center gap-3">
-                <div
-                  style={{ backgroundColor: t.color }}
-                  className="w-3 h-3 rounded-full"
-                />
+                <div style={{ backgroundColor: t.color }} className="w-3 h-3 rounded-full" />
                 {t.label}
               </div>
             </button>
