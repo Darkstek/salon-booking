@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import API_URL, { fetchWithAuth } from './config';
 
-function Profile({ onThemeChange, theme }) {
+function Profile({ onThemeChange, theme, onModeChange, mode }) {
   const [businessName, setBusinessName] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
@@ -211,34 +211,51 @@ function Profile({ onThemeChange, theme }) {
         ))}
       </ul>
 
-      <div className="mt-10">
-        <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
-          Vzhled
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          {[
-            { id: 'green', label: 'Default', color: '#86efac' },
-            { id: 'blue', label: 'Blue', color: '#60a5fa' },
-            { id: 'pink', label: 'Pink', color: '#f9a8d4' },
-            { id: 'cyberpunk', label: 'Cyberpunk', color: '#fde047' },
-            { id: 'light', label: 'Light', color: '#22c55e' },
-          ].map(t => (
+        <div className="mt-10">
+      <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
+        Vzhled
+      </h2>
+
+      {/* Dark / Light přepínač */}
+        <div style={{ borderColor: 'var(--border)' }} className="flex border rounded-lg overflow-hidden mb-6">
+          {['dark', 'light'].map(m => (
             <button
-              key={t.id}
-              onClick={() => onThemeChange(t.id)}
-              style={{
-                borderColor: theme === t.id ? t.color : 'var(--border)',
-                color: theme === t.id ? t.color : 'var(--text-muted)',
-                backgroundColor: theme === t.id ? `${t.color}15` : 'transparent',
-                borderRadius: 'var(--radius-sm)',
+            key={m}
+            onClick={() => onModeChange(m)}
+            style={{
+          backgroundColor: mode === m ? 'var(--accent)' : 'transparent',
+          color: mode === m ? '#000' : 'var(--text-muted)',
               }}
-              className="border py-3 px-4 text-sm tracking-wide transition text-left"
-            >
-              <div className="flex items-center gap-3">
-                <div style={{ backgroundColor: t.color }} className="w-3 h-3 rounded-full" />
-                {t.label}
-              </div>
+            className="flex-1 py-2 text-xs tracking-widest uppercase transition font-medium">
+              
+            {m === 'dark' ? 'Tmavý' : 'Světlý'}
             </button>
+              ))}
+          </div>
+
+  {/* Barevná schémata */}
+  <div className="grid grid-cols-2 gap-3">
+    {[
+      { id: 'green', label: 'Default', color: '#86efac' },
+      { id: 'blue', label: 'Blue', color: '#60a5fa' },
+      { id: 'pink', label: 'Pink', color: '#f9a8d4' },
+      { id: 'cyberpunk', label: 'Cyberpunk', color: '#fde047' },
+    ].map(t => (
+      <button
+        key={t.id}
+        onClick={() => onThemeChange(t.id)}
+        style={{
+          borderColor: theme === t.id ? t.color : 'var(--border)',
+          color: theme === t.id ? t.color : 'var(--text-muted)',
+          backgroundColor: theme === t.id ? `${t.color}15` : 'transparent',
+          borderRadius: 'var(--radius-sm)',
+        }}
+        className="border py-3 px-4 text-sm tracking-wide transition text-left">
+                <div className="flex items-center gap-3">
+              <div style={{ backgroundColor: t.color }} className="w-3 h-3 rounded-full" />
+           {t.label}
+            </div>
+          </button>
           ))}
         </div>
       </div>

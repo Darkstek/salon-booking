@@ -18,20 +18,32 @@ function App() {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') || 'green'
   );
+  const [mode, setMode] = useState(
+  localStorage.getItem('mode') || 'dark'
+  );
 
   useEffect(() => {
-    // Při každé změně theme nastavíme data-theme na <html> element
-    if (theme === 'green') {
-      document.documentElement.removeAttribute('data-theme');
-    } else {
-      document.documentElement.setAttribute('data-theme', theme);
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
+  if (theme === 'green') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+  localStorage.setItem('theme', theme);
+}, [theme]);
+
+  useEffect(() => {
+  if (mode === 'dark') {
+    document.documentElement.removeAttribute('data-mode');
+      } else {
+    document.documentElement.setAttribute('data-mode', mode);
+      }
+    localStorage.setItem('mode', mode);
+      }, [mode]);
 
   const handleLogin = () => setIsLoggedIn(true);
 
   const handleThemeChange = (newTheme) => setTheme(newTheme);
+  const handleModeChange = (newMode) => setMode(newMode);
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
@@ -88,7 +100,7 @@ if (isGuest) {
               </>
             } />
             <Route path="/zakaznici" element={<CustomerList />} />
-            <Route path="/profil" element={<Profile onThemeChange={handleThemeChange} theme={theme} />} />
+            <Profile onThemeChange={handleThemeChange} theme={theme} onModeChange={handleModeChange} mode={mode} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>

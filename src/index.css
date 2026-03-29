@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Výchozí dark mód */
 :root {
   --accent: #86efac;
   --accent-hover: #4ade80;
@@ -19,21 +20,12 @@
   --btn-clip: none;
 }
 
+/* Barevná schémata - mění jen akcenty */
 [data-theme="blue"] {
   --accent: #60a5fa;
   --accent-hover: #3b82f6;
   --accent-muted: rgba(96, 165, 250, 0.1);
   --accent-border: rgba(96, 165, 250, 0.3);
-  --bg-primary: #0f1117;
-  --bg-secondary: #1a1d27;
-  --bg-card: #0f1117;
-  --border: rgba(255, 255, 255, 0.06);
-  --text-primary: #ffffff;
-  --text-secondary: #e2e8f0;
-  --text-muted: #94a3b8;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --btn-clip: none;
 }
 
 [data-theme="pink"] {
@@ -41,16 +33,6 @@
   --accent-hover: #f472b6;
   --accent-muted: rgba(249, 168, 212, 0.1);
   --accent-border: rgba(249, 168, 212, 0.3);
-  --bg-primary: #0f0a0f;
-  --bg-secondary: #1a1020;
-  --bg-card: #120d18;
-  --border: rgba(249, 168, 212, 0.08);
-  --text-primary: #ffffff;
-  --text-secondary: #e2e8f0;
-  --text-muted: #94a3b8;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --btn-clip: none;
 }
 
 [data-theme="cyberpunk"] {
@@ -58,35 +40,23 @@
   --accent-hover: #facc15;
   --accent-muted: rgba(253, 224, 71, 0.1);
   --accent-border: rgba(253, 224, 71, 0.3);
-  --bg-primary: #0d0d0f;
-  --bg-secondary: #111116;
-  --bg-card: #0a0a0c;
-  --border: rgba(253, 224, 71, 0.08);
-  --text-primary: #ffffff;
-  --text-secondary: #e2e8f0;
-  --text-muted: #94a3b8;
   --radius: 0px;
   --radius-sm: 0px;
   --btn-clip: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
 }
 
-[data-theme="light"] {
-  --accent: #22c55e;
-  --accent-hover: #16a34a;
-  --accent-muted: rgba(34, 197, 94, 0.1);
-  --accent-border: rgba(34, 197, 94, 0.3);
-  --bg-primary: #f8fafc;
+/* Light mód - přepíše pozadí a texty */
+[data-mode="light"] {
+  --bg-primary: #f1f5f9;
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
   --border: rgba(0, 0, 0, 0.08);
   --text-primary: #111111;
   --text-secondary: #374151;
   --text-muted: #6b7280;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --btn-clip: none;
 }
 
+/* Plynulé přepínání */
 * {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
