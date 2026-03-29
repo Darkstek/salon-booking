@@ -15,7 +15,7 @@ Fullstack webová aplikace pro správu rezervací a zákazníků v kosmetickém 
 
 Stavěl jsem to od nuly — od návrhu databázového schématu přes REST API až po React frontend a deployment na produkci. Projekt je aktivně používán a průběžně rozšiřován podle zpětné vazby od uživatele.
 
-Víc než na výsledek mi šlo o pochopení toho, jak celý stack funguje dohromady — jak frontend komunikuje s backendem, jak funguje autentizace, a jak vypadá reálný vývojový proces od nápadu po nasazení.
+Víc než na výsledek mi šlo o pochopení toho, jak celý stack funguje dohromady. Narazil jsem na věci které se v kurzech moc neřeší — multi-tenant architektura, OAuth flow, PWA, nebo ladění problémů mezi frontendem a backendem v produkci.
 
 ---
 
@@ -35,11 +35,13 @@ Víc než na výsledek mi šlo o pochopení toho, jak celý stack funguje dohrom
 ## Funkce
 
 - Přihlašování přes Google OAuth a JWT
-- Správa zákazníků — přidání, smazání, historie návštěv a nadcházející schůzky
-- Správa termínů — přidání, smazání, řazení podle data
-- Veřejný vyhledávač salonů s profilem každého podnikatele
+- Správa zákazníků — přidání, smazání, abecední řazení, vyhledávání, historie návštěv
+- Správa termínů — přidání, smazání, řazení podle data, oddělení nadcházejících a minulých
 - Podnikatelský profil — název, kontakt, adresa, popis, vlastní ceník služeb
-- Responzivní design funkční na mobilu i desktopu
+- Veřejný vyhledávač salonů s profilem každého podnikatele
+- Theme switcher — 4 barevná schémata (Default, Blue, Pink, Cyberpunk) × 2 módy (Dark, Light)
+- PWA — appka jde přidat na plochu mobilu jako nativní aplikace
+- Responzivní design s hamburger menu na mobilu
 - Toast notifikace a potvrzovací modály pro destruktivní akce
 
 ---
@@ -50,13 +52,13 @@ Frontend je nasazený na Vercelu, backend s databází na Railway. Komunikace pr
 ```
 salon-booking/               React frontend (Vercel)
 ├── src/
-│   ├── App.js               Routing, auth state
+│   ├── App.js               Routing, auth state, theme management
 │   ├── Login.js             Google OAuth přihlášení
-│   ├── Header.js            Navigace
+│   ├── Header.js            Navigace s hamburger menu
 │   ├── AppointmentList.js   Seznam termínů
-│   ├── AddAppointment.js    Přidání termínu
-│   ├── CustomerList.js      Správa zákazníků
-│   ├── Profile.js           Profil podnikatele + správa služeb
+│   ├── AddAppointment.js    Přidání termínu s vyhledáváním zákazníků
+│   ├── CustomerList.js      Správa zákazníků s historií
+│   ├── Profile.js           Profil podnikatele + služby + theme switcher
 │   ├── PublicSearch.js      Veřejný vyhledávač salonů
 │   └── PublicProfile.js     Veřejný profil salonu
 
@@ -164,7 +166,7 @@ npm run dev
 
 ## Co jsem se naučil
 
-Tohle byl první projekt kde jsem musel vyřešit všechno sám — od databázového návrhu přes autentizaci až po produkční deployment. Narazil jsem na věci které se v kurzech moc neřeší, jako multi-tenant architektura, OAuth flow, nebo ladění problémů mezi frontendem a backendem v produkci. Důraz jsem kladl na to aby mi každý řádek kódu dával smysl, ne jen aby to nějak fungovalo.
+Tohle byl první projekt kde jsem musel vyřešit všechno sám — od databázového návrhu přes autentizaci až po produkční deployment. Narazil jsem na věci které se v kurzech moc neřeší, jako multi-tenant architektura, OAuth flow, PWA nebo ladění problémů mezi frontendem a backendem v produkci. Důraz jsem kladl na to aby mi každý řádek kódu dával smysl, ne jen aby to nějak fungovalo.
 
 ---
 
