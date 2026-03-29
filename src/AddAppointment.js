@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import toast from 'react-hot-toast';
 import API_URL, { fetchWithAuth } from './config';
 
@@ -8,8 +6,8 @@ function AddAppointment() {
   const [customers, setCustomers] = useState([]);
   const [customerId, setCustomerId] = useState('');
   const [serviceName, setServiceName] = useState('');
-  const [date, setDate] = useState(null);
-  const [time, setTime] = useState(null);
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
   const [note, setNote] = useState('');
   const [services, setServices] = useState([]);
   const [customService, setCustomService] = useState('');
@@ -40,8 +38,8 @@ function AddAppointment() {
       body: JSON.stringify({
       customer_id: customerId,
       service_name: serviceName,
-      appointment_date: date ? date.toISOString().split('T')[0] : '',
-      appointment_time: time ? `${time.getHours().toString().padStart(2,'0')}:${time.getMinutes().toString().padStart(2,'0')}` : '',
+      appointment_date: date,
+      appointment_time: time,
       note,
       }),
     });
@@ -124,28 +122,21 @@ function AddAppointment() {
         {useCustom ? '← Vybrat ze seznamu' : '+ Zadat vlastní službu'}
       </button>
 
-      <DatePicker
-        selected={date}
-        onChange={(d) => setDate(d)}
-        dateFormat="dd.MM.yyyy"
-        placeholderText="Vyber datum"
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
         style={inputStyle}
         className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
-        wrapperClassName="w-full mb-4"
           />
 
-      <DatePicker
-        selected={time}
-        onChange={(t) => setTime(t)}
-        showTimeSelect
-        showTimeSelectOnly
-        timeIntervals={15}
-        timeCaption="Čas"
-        dateFormat="HH:mm"
-        placeholderText="Vyber čas"
+      <input
+        type="time"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+        style={inputStyle}
         className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
-        wrapperClassName="w-full mb-4"
-          />
+        />
 
       <textarea
         placeholder="Poznámka"
