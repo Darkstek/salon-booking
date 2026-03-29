@@ -12,6 +12,7 @@ function AddAppointment() {
   const [services, setServices] = useState([]);
   const [customService, setCustomService] = useState('');
   const [useCustom, setUseCustom] = useState(false);
+  const [customerSearch, setCustomerSearch] = useState('');
 
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/customers`)
@@ -76,17 +77,62 @@ function AddAppointment() {
         Přidat termín
       </h2>
 
-      <select
-        value={customerId}
-        onChange={(e) => setCustomerId(e.target.value)}
-        style={inputStyle}
-        className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
-      >
-        <option value="">Vyber zákazníka</option>
-        {customers.map(c => (
-          <option key={c.id} value={c.id}>{c.name}</option>
-        ))}
-      </select>
+      <input
+  type="text"
+  placeholder="Hledat zákazníka..."
+  value={customerSearch}
+  onChange={(e) => {
+    setCustomerSearch(e.target.value);
+    setCustomerId('');
+  }}
+  style={inputStyle}
+  className="w-full border px-4 py-3 mb-2 focus:outline-none text-sm"
+/>
+{customerSearch && (
+  <div
+    style={{
+      backgroundColor: 'var(--bg-card)',
+      borderColor: 'var(--border)',
+      borderRadius: 'var(--radius-sm)',
+    }}
+    className="border mb-4 max-h-48 overflow-y-auto"
+  >
+    {customers
+      .filter(c => c.name.toLowerCase().includes(customerSearch.toLowerCase()))
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'cs'))
+      .map(c => (
+        <div
+          key={c.id}
+          onClick={() => {
+            setCustomerId(c.id);
+            setCustomerSearch(c.name);
+          }}
+          style={{
+            color: customerId == c.id ? 'var(--accent)' : 'var(--text-primary)',
+            borderBottomColor: 'var(--border)',
+          }}
+          className="px-4 py-2 text-sm cursor-pointer hover:opacity-70 transition border-b last:border-0"
+        >
+          {c.name}
+        </div>
+      ))}
+  </div>
+)}
+{!customerSearch && (
+  <select
+    value={customerId}
+    onChange={(e) => setCustomerId(e.target.value)}
+    style={inputStyle}
+    className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
+  >
+    <option value="">Vyber zákazníka</option>
+    {customers
+      .sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase(), 'cs'))
+      .map(c => (
+        <option key={c.id} value={c.id}>{c.name}</option>
+      ))}
+  </select>
+)}
 
       {!useCustom ? (
         <select
