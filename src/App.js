@@ -100,7 +100,7 @@ if (isGuest) {
               </>
             } />
             <Route path="/zakaznici" element={<CustomerList />} />
-            <Profile onThemeChange={handleThemeChange} theme={theme} onModeChange={handleModeChange} mode={mode} />
+            <Route path="/profil" element={<Profile onThemeChange={handleThemeChange} theme={theme} onModeChange={handleModeChange} mode={mode} />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
