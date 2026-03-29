@@ -47,9 +47,9 @@
 
 /* Light mód - přepíše pozadí a texty */
 [data-mode="light"] {
-  --bg-primary: #e8edf2;
-  --bg-secondary: #f0f4f8;
-  --bg-card: #f5f8fb;
+  --bg-primary: #dde3ea;
+  --bg-secondary: #e8edf2;
+  --bg-card: #f0f4f8;
   --border: rgba(0, 0, 0, 0.08);
   --text-primary: #1a1a2e;
   --text-secondary: #374151;
