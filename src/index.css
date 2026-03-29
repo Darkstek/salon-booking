@@ -70,3 +70,20 @@ input[type="time"] {
 [data-mode="light"] input[type="time"] {
   color-scheme: light;
 }
+
+input[type="date"]::-webkit-datetime-edit,
+input[type="time"]::-webkit-datetime-edit {
+  color: var(--text-primary);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-clock-picker-indicator {
+  filter: invert(1);
+  opacity: 0.6;
+}
+
+[data-mode="light"] input[type="date"]::-webkit-calendar-picker-indicator,
+[data-mode="light"] input[type="time"]::-webkit-clock-picker-indicator {
+  filter: invert(0);
+  opacity: 0.6;
+}
