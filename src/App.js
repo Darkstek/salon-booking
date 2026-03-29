@@ -76,7 +76,7 @@ if (isGuest) {
     <BrowserRouter>
       <div className="min-h-screen" style={{ 
           backgroundColor: 'var(--bg-primary)',
-          backgroundImage: 'url(/nightcity.jpg)',
+          backgroundImage: mode === 'light' ? 'none' : 'url(/nightcity.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
