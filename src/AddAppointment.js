@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { cs } from 'date-fns/locale';
 import toast from 'react-hot-toast';
 import API_URL, { fetchWithAuth } from './config';
 
@@ -129,7 +128,6 @@ function AddAppointment() {
         selected={date}
         onChange={(d) => setDate(d)}
         dateFormat="dd.MM.yyyy"
-        locale={cs}
         placeholderText="Vyber datum"
         style={inputStyle}
         className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
