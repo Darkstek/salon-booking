@@ -127,7 +127,10 @@ function AddAppointment() {
         placeholder="Vyber datum"
         value={date}
         onChange={(e) => setDate(e.target.value)}
-        style={inputStyle}
+        style={{
+        ...inputStyle,
+        colorScheme: 'dark',
+        }}
         className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
 
@@ -136,7 +139,10 @@ function AddAppointment() {
         placeholder="Vyber čas"
         value={time}
         onChange={(e) => setTime(e.target.value)}
-        style={inputStyle}
+        style={{
+        ...inputStyle,
+        colorScheme: 'dark',
+        }}
         className="w-full border px-4 py-3 mb-4 focus:outline-none text-sm"
       />
 
