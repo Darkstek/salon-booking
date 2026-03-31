@@ -12,6 +12,16 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
   const [serviceName, setServiceName] = useState('');
   const [servicePrice, setServicePrice] = useState('');
   const [serviceDuration, setServiceDuration] = useState('');
+  const [slotDuration, setSlotDuration] = useState(60);
+  const [availability, setAvailability] = useState([
+    { day_of_week: 1, start_time: '08:00', end_time: '16:00', active: true },
+    { day_of_week: 2, start_time: '08:00', end_time: '16:00', active: true },
+    { day_of_week: 3, start_time: '08:00', end_time: '16:00', active: true },
+    { day_of_week: 4, start_time: '08:00', end_time: '16:00', active: true },
+    { day_of_week: 5, start_time: '08:00', end_time: '16:00', active: true },
+    { day_of_week: 6, start_time: '08:00', end_time: '16:00', active: false },
+    { day_of_week: 0, start_time: '08:00', end_time: '16:00', active: false },
+  ]);
 
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/profile`)
@@ -22,8 +32,23 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
           setPhone(data.phone || '');
           setAddress(data.address || '');
           setDescription(data.description || '');
+          if (data.slot_duration) setSlotDuration(data.slot_duration);
         }
         setLoading(false);
+      });
+
+    fetchWithAuth(`${API_URL}/api/availability`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.length > 0) {
+          setAvailability(prev => prev.map(day => {
+            const found = data.find(d => d.day_of_week === day.day_of_week);
+            if (found) {
+              return { ...day, start_time: found.start_time.slice(0, 5), end_time: found.end_time.slice(0, 5), active: true };
+            }
+            return { ...day, active: false };
+          }));
+        }
       });
 
     fetchWithAuth(`${API_URL}/api/profile`)
@@ -47,6 +72,18 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
     } else {
       toast.error('Něco se pokazilo');
     }
+  };
+
+  const handleSaveAvailability = async () => {
+    const activeDays = availability.filter(d => d.active);
+    await fetchWithAuth(`${API_URL}/api/availability`, {
+      method: 'POST',
+      body: JSON.stringify({
+        availability: activeDays,
+        slot_duration: slotDuration,
+      }),
+    });
+    toast.success('Dostupnost uložena!');
   };
 
   const handleAddService = async () => {
@@ -101,10 +138,11 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
       }}
       className="max-w-xl mx-auto mt-6 border p-8 mb-6"
     >
+
+      {/* SEKCE 1 — Profil */}
       <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
         Můj profil
       </h2>
-
       <input
         type="text"
         placeholder="Název podniku"
@@ -145,10 +183,109 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
         Uložit profil
       </button>
 
+      {/* SEKCE 2 — Dostupnost */}
+      <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
+        Dostupnost
+      </h2>
+      <div className="mb-6">
+        <label style={{ color: 'var(--text-muted)' }} className="text-xs tracking-widest uppercase block mb-2">
+          Délka slotu (minuty)
+        </label>
+        <select
+          value={slotDuration}
+          onChange={(e) => setSlotDuration(parseInt(e.target.value))}
+          style={inputStyle}
+          className="w-full border px-4 py-3 focus:outline-none text-sm"
+        >
+          <option value={15}>15 minut</option>
+          <option value={30}>30 minut</option>
+          <option value={45}>45 minut</option>
+          <option value={60}>60 minut</option>
+          <option value={90}>90 minut</option>
+          <option value={120}>120 minut</option>
+        </select>
+      </div>
+      {['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'].map((dayName, index) => {
+        const day = availability.find(d => d.day_of_week === index);
+        return (
+          <div key={index}
+            style={{
+              borderColor: 'var(--border)',
+              backgroundColor: 'var(--bg-card)',
+              borderRadius: 'var(--radius-sm)',
+            }}
+            className="border px-4 py-3 mb-2"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span style={{ color: day.active ? 'var(--text-primary)' : 'var(--text-muted)' }} className="text-sm font-medium w-8">
+                {dayName}
+              </span>
+              <button
+                onClick={() => setAvailability(prev => prev.map(d =>
+                  d.day_of_week === index ? { ...d, active: !d.active } : d
+                ))}
+                style={{
+                  backgroundColor: day.active ? 'var(--accent)' : 'var(--border)',
+                  borderRadius: '9999px',
+                }}
+                className="w-10 h-5 transition-all relative"
+              >
+                <span style={{
+                  backgroundColor: 'white',
+                  borderRadius: '9999px',
+                  position: 'absolute',
+                  top: '2px',
+                  left: day.active ? '22px' : '2px',
+                  transition: 'left 0.2s',
+                  width: '16px',
+                  height: '16px',
+                  display: 'block',
+                }} />
+              </button>
+            </div>
+            {day.active && (
+              <div className="flex gap-3 mt-2">
+                <div className="flex-1">
+                  <label style={{ color: 'var(--text-muted)' }} className="text-xs block mb-1">Od</label>
+                  <input
+                    type="time"
+                    value={day.start_time}
+                    onChange={(e) => setAvailability(prev => prev.map(d =>
+                      d.day_of_week === index ? { ...d, start_time: e.target.value } : d
+                    ))}
+                    style={inputStyle}
+                    className="w-full border px-3 py-2 focus:outline-none text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label style={{ color: 'var(--text-muted)' }} className="text-xs block mb-1">Do</label>
+                  <input
+                    type="time"
+                    value={day.end_time}
+                    onChange={(e) => setAvailability(prev => prev.map(d =>
+                      d.day_of_week === index ? { ...d, end_time: e.target.value } : d
+                    ))}
+                    style={inputStyle}
+                    className="w-full border px-3 py-2 focus:outline-none text-sm"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <button
+        onClick={handleSaveAvailability}
+        style={btnStyle}
+        className="text-gray-900 font-medium py-3 px-6 w-full transition tracking-wide text-sm hover:opacity-90 mt-4 mb-10"
+      >
+        Uložit dostupnost
+      </button>
+
+      {/* SEKCE 3 — Moje služby */}
       <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
         Moje služby
       </h2>
-
       <input
         type="text"
         placeholder="Název služby (např. Pedikúra)"
@@ -182,7 +319,6 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
       >
         Přidat službu
       </button>
-
       <ul>
         {services.map(s => (
           <li key={s.id}
@@ -211,54 +347,53 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
         ))}
       </ul>
 
-        <div className="mt-10">
-      <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
-        Vzhled
-      </h2>
-
-      {/* Dark / Light přepínač */}
+      {/* SEKCE 4 — Vzhled */}
+      <div className="mt-10">
+        <h2 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium mb-6 tracking-widest uppercase">
+          Vzhled
+        </h2>
         <div style={{ borderColor: 'var(--border)' }} className="flex border rounded-lg overflow-hidden mb-6">
           {['dark', 'light'].map(m => (
             <button
-            key={m}
-            onClick={() => onModeChange(m)}
-            style={{
-          backgroundColor: mode === m ? 'var(--accent)' : 'transparent',
-          color: mode === m ? '#000' : 'var(--text-muted)',
+              key={m}
+              onClick={() => onModeChange(m)}
+              style={{
+                backgroundColor: mode === m ? 'var(--accent)' : 'transparent',
+                color: mode === m ? '#000' : 'var(--text-muted)',
               }}
-            className="flex-1 py-2 text-xs tracking-widest uppercase transition font-medium">
-              
-            {m === 'dark' ? 'Tmavý' : 'Světlý'}
+              className="flex-1 py-2 text-xs tracking-widest uppercase transition font-medium"
+            >
+              {m === 'dark' ? 'Tmavý' : 'Světlý'}
             </button>
-              ))}
-          </div>
-
-  {/* Barevná schémata */}
-  <div className="grid grid-cols-2 gap-3">
-    {[
-      { id: 'green', label: 'Default', color: '#86efac' },
-      { id: 'blue', label: 'Blue', color: '#60a5fa' },
-      { id: 'pink', label: 'Pink', color: '#f9a8d4' },
-      { id: 'cyberpunk', label: 'Cyberpunk', color: '#fde047' },
-    ].map(t => (
-      <button
-        key={t.id}
-        onClick={() => onThemeChange(t.id)}
-        style={{
-          borderColor: theme === t.id ? t.color : 'var(--border)',
-          color: theme === t.id ? t.color : 'var(--text-muted)',
-          backgroundColor: theme === t.id ? `${t.color}15` : 'transparent',
-          borderRadius: 'var(--radius-sm)',
-        }}
-        className="border py-3 px-4 text-sm tracking-wide transition text-left">
-                <div className="flex items-center gap-3">
-              <div style={{ backgroundColor: t.color }} className="w-3 h-3 rounded-full" />
-           {t.label}
-            </div>
-          </button>
+          ))}
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { id: 'green', label: 'Default', color: '#86efac' },
+            { id: 'blue', label: 'Blue', color: '#60a5fa' },
+            { id: 'pink', label: 'Pink', color: '#f9a8d4' },
+            { id: 'cyberpunk', label: 'Cyberpunk', color: '#fde047' },
+          ].map(t => (
+            <button
+              key={t.id}
+              onClick={() => onThemeChange(t.id)}
+              style={{
+                borderColor: theme === t.id ? t.color : 'var(--border)',
+                color: theme === t.id ? t.color : 'var(--text-muted)',
+                backgroundColor: theme === t.id ? `${t.color}15` : 'transparent',
+                borderRadius: 'var(--radius-sm)',
+              }}
+              className="border py-3 px-4 text-sm tracking-wide transition text-left"
+            >
+              <div className="flex items-center gap-3">
+                <div style={{ backgroundColor: t.color }} className="w-3 h-3 rounded-full" />
+                {t.label}
+              </div>
+            </button>
           ))}
         </div>
       </div>
+
     </div>
   );
 }
