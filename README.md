@@ -1,160 +1,103 @@
-# Salon Booking Zerio
+# Zerio
 
-Fullstack webová aplikace pro správu rezervací a zákazníků v kosmetickém salonu. Vznikla jako reálné řešení pro rodinný podnik — cílem bylo nahradit předražené SaaS alternativy něčím vlastním, co přesně odpovídá potřebám konkrétního provozu.
+Booking appka kterou jsem postavil pro mámův kosmetický salon. Začalo to tím, že jsem se podíval kolik stojí normální řešení na trhu — 600 až 1000 Kč měsíčně za věci které ani nepotřebuje. Tak jsem to postavil sám.
 
-**Live Demo:** [salon-booking-ashy.vercel.app](https://salon-booking-ashy.vercel.app/)  
-**Backend:** [github.com/Darkstek/salon-server](https://github.com/Darkstek/salon-server)
+**Live:** [salon-booking-ashy.vercel.app](https://salon-booking-ashy.vercel.app/)
 
-> Demo přihlášení pro recruitery  
-> Email: `mama@salon.cz`  
-> Heslo: `heslo123`
+> Demo přihlášení: `mama@salon.cz` / `heslo123`
 
 ---
 
-## O projektu
+## Co to umí
 
-Stavěl jsem to od nuly — od návrhu databázového schématu přes REST API až po React frontend a deployment na produkci. Projekt je aktivně používán a průběžně rozšiřován podle zpětné vazby od uživatele.
+Mamka si přes appku zapisuje zákazníky a termíny, místo aby to psala do sešitu nebo platila za předražený SaaS. Zákazníci si navíc můžou sami najít salon ve veřejném vyhledávači a zarezervovat si termín online.
 
-Víc než na výsledek mi šlo o pochopení toho, jak celý stack funguje dohromady. Narazil jsem na věci které se v kurzech moc neřeší — multi-tenant architektura, OAuth flow, PWA, nebo ladění problémů mezi frontendem a backendem v produkci.
+- přihlášení přes Google nebo email
+- správa zákazníků — přidání, smazání, vyhledávání, historie návštěv
+- termíny — zápis, mazání, rozdělení na tento týden / budoucí / historie
+- profil salonu s ceníkem služeb
+- nastavení pracovní doby a délky slotů
+- veřejný vyhledávač salonů
+- online booking pro zákazníky přes veřejný profil
+- theme switcher — 4 barevná schémata × dark/light mód
+- PWA — jde přidat na plochu mobilu
+- responzivní design s hamburger menu
 
 ---
 
-## Tech Stack
+## Stack
 
-| Vrstva | Technologie |
-|--------|-------------|
+| | |
+|---|---|
 | Frontend | React, Tailwind CSS, React Router |
-| Backend | Node.js, Express.js |
+| Backend | Node.js, Express |
 | Databáze | PostgreSQL |
-| Autentizace | JWT, Google OAuth |
-| Hosting | Vercel (frontend), Railway (backend + DB) |
-| Verzování | Git, GitHub |
-
----
-
-## Funkce
-
-- Přihlašování přes Google OAuth a JWT
-- Správa zákazníků — přidání, smazání, abecední řazení, vyhledávání, historie návštěv
-- Správa termínů — přidání, smazání, řazení podle data, oddělení nadcházejících a minulých
-- Podnikatelský profil — název, kontakt, adresa, popis, vlastní ceník služeb
-- Veřejný vyhledávač salonů s profilem každého podnikatele
-- Theme switcher — 4 barevná schémata (Default, Blue, Pink, Cyberpunk) × 2 módy (Dark, Light)
-- PWA — appka jde přidat na plochu mobilu jako nativní aplikace
-- Responzivní design s hamburger menu na mobilu
-- Toast notifikace a potvrzovací modály pro destruktivní akce
+| Auth | JWT, Google OAuth |
+| Hosting | Vercel + Railway |
 
 ---
 
 ## Architektura
 
-Frontend je nasazený na Vercelu, backend s databází na Railway. Komunikace probíhá přes REST API.
-```
-salon-booking/               React frontend (Vercel)
-├── src/
-│   ├── App.js               Routing, auth state, theme management
-│   ├── Login.js             Google OAuth přihlášení
-│   ├── Header.js            Navigace s hamburger menu
-│   ├── AppointmentList.js   Seznam termínů
-│   ├── AddAppointment.js    Přidání termínu s vyhledáváním zákazníků
-│   ├── CustomerList.js      Správa zákazníků s historií
-│   ├── Profile.js           Profil podnikatele + služby + theme switcher
-│   ├── PublicSearch.js      Veřejný vyhledávač salonů
-│   └── PublicProfile.js     Veřejný profil salonu
+Multi-tenant — každý podnikatel vidí jen svoje zákazníky a termíny. Veřejná část (vyhledávač, profily, booking) běží bez přihlášení.
 
-salon-server/                Node.js backend (Railway)
-├── index.js                 Express server, REST API
-├── setupDb.js               Inicializace databáze
-└── createUser.js            Skript pro vytvoření uživatele
+```
+salon-booking/               frontend (Vercel)
+├── src/
+│   ├── App.js               routing, auth, theme
+│   ├── Login.js             přihlášení
+│   ├── Header.js            navigace
+│   ├── AppointmentList.js   seznam termínů
+│   ├── AddAppointment.js    přidání termínu
+│   ├── CustomerList.js      zákazníci
+│   ├── Profile.js           profil + služby + dostupnost + vzhled
+│   ├── PublicSearch.js      vyhledávač salonů
+│   └── PublicProfile.js     veřejný profil + booking
+
+salon-server/                backend (Railway)
+├── index.js                 Express API
+├── setupDb.js               inicializace DB
+└── createUser.js            vytvoření uživatele
 ```
 
 ---
 
-## REST API
+## API
 
 | Metoda | Endpoint | Popis |
 |--------|----------|-------|
-| POST | `/api/auth/google` | Google OAuth přihlášení |
-| POST | `/api/login` | Přihlášení emailem, vrátí JWT |
-| GET | `/api/customers` | Seznam zákazníků |
-| POST | `/api/customers` | Přidání zákazníka |
-| DELETE | `/api/customers/:id` | Smazání zákazníka |
-| GET | `/api/customers/:id/detail` | Historie a nadcházející schůzky |
-| GET | `/api/appointments` | Seznam termínů |
-| POST | `/api/appointments` | Přidání termínu |
-| DELETE | `/api/appointments/:id` | Smazání termínu |
-| GET | `/api/profile` | Načtení profilu podnikatele |
-| POST | `/api/profile` | Uložení profilu |
-| GET | `/api/profiles/public` | Veřejný seznam všech salonů |
-| GET | `/api/services/:userId` | Služby konkrétního salonu |
-| POST | `/api/services` | Přidání služby |
-| DELETE | `/api/services/:id` | Smazání služby |
-
----
-
-## Databázové schéma
-```sql
-users (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(100) UNIQUE NOT NULL,
-  password VARCHAR(255),
-  created_at TIMESTAMP DEFAULT NOW()
-)
-
-customers (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
-  name VARCHAR(100) NOT NULL,
-  phone VARCHAR(20),
-  note TEXT,
-  created_at TIMESTAMP DEFAULT NOW()
-)
-
-appointments (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
-  customer_id INTEGER REFERENCES customers(id),
-  service_name VARCHAR(100) NOT NULL,
-  appointment_date DATE NOT NULL,
-  appointment_time TIME NOT NULL,
-  note TEXT,
-  created_at TIMESTAMP DEFAULT NOW()
-)
-
-profiles (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER UNIQUE REFERENCES users(id),
-  business_name VARCHAR(100),
-  phone VARCHAR(20),
-  address TEXT,
-  description TEXT,
-  created_at TIMESTAMP DEFAULT NOW()
-)
-
-services (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER REFERENCES users(id),
-  name VARCHAR(100) NOT NULL,
-  price INTEGER,
-  duration INTEGER,
-  created_at TIMESTAMP DEFAULT NOW()
-)
-```
+| POST | `/api/auth/google` | Google OAuth |
+| POST | `/api/login` | přihlášení emailem |
+| GET | `/api/customers` | seznam zákazníků |
+| POST | `/api/customers` | přidání zákazníka |
+| DELETE | `/api/customers/:id` | smazání zákazníka |
+| GET | `/api/customers/:id/detail` | historie zákazníka |
+| GET | `/api/appointments` | seznam termínů |
+| POST | `/api/appointments` | přidání termínu |
+| DELETE | `/api/appointments/:id` | smazání termínu |
+| GET | `/api/profile` | načtení profilu |
+| POST | `/api/profile` | uložení profilu |
+| GET | `/api/profiles/public` | veřejný seznam salonů |
+| GET | `/api/services/:userId` | služby salonu |
+| POST | `/api/services` | přidání služby |
+| DELETE | `/api/services/:id` | smazání služby |
+| GET | `/api/availability` | načtení dostupnosti |
+| POST | `/api/availability` | uložení dostupnosti |
+| GET | `/api/slots/:userId/:date` | volné sloty pro daný den |
+| POST | `/api/bookings` | rezervace od zákazníka |
 
 ---
 
 ## Lokální spuštění
 
-### Frontend
 ```bash
+# frontend
 git clone https://github.com/Darkstek/salon-booking
 cd salon-booking
 npm install
 npm start
-```
 
-### Backend
-```bash
+# backend
 git clone https://github.com/Darkstek/salon-server
 cd salon-server
 npm install
@@ -166,11 +109,10 @@ npm run dev
 
 ## Co jsem se naučil
 
-Tohle byl první projekt kde jsem musel vyřešit všechno sám — od databázového návrhu přes autentizaci až po produkční deployment. Narazil jsem na věci které se v kurzech moc neřeší, jako multi-tenant architektura, OAuth flow, PWA nebo ladění problémů mezi frontendem a backendem v produkci. Důraz jsem kladl na to aby mi každý řádek kódu dával smysl, ne jen aby to nějak fungovalo.
+Tohle byl první projekt kde jsem řešil všechno od začátku do konce — návrh databáze, REST API, autentizace, deployment, produkční provoz. Nejvíc mě bavily věci co se v kurzech moc neřeší — multi-tenant logika, OAuth flow, nebo ladění problémů mezi frontendem a backendem přímo v produkci.
+
+Projekt aktivně používám jako testovací prostředí — průběžně přidávám funkce podle reálné zpětné vazby od uživatele a postupně přepisuji kód do TypeScriptu.
 
 ---
 
-## Autor
-
-Student softwarového vývoje na Unicorn University  
-[GitHub](https://github.com/Darkstek)
+*Student softwarového vývoje — Unicorn University | [GitHub](https://github.com/Darkstek)*
