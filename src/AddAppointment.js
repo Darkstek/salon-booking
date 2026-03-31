@@ -31,21 +31,23 @@ function AddAppointment() {
   }, []);
 
   const handleSubmit = async () => {
-    if (!customerId || !serviceName || !date || !time) return;
+  if (!customerSearch || !serviceName || !date || !time) return;
 
-    await fetchWithAuth(`${API_URL}/api/appointments`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        customer_id: customerId,
-        service_name: serviceName,
-        appointment_date: date,
-        appointment_time: time,
-        note,
-      }),
-    });
+  await fetchWithAuth(`${API_URL}/api/appointments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      customer_id: customerId || null,
+      customer_name_unregistered: customerId ? null : customerSearch,
+      service_name: serviceName,
+      appointment_date: date,
+      appointment_time: time,
+      note,
+    }),
+  });
 
     setCustomerId('');
+    setCustomerSearch('');
     setServiceName('');
     setDate('');
     setTime('');
@@ -88,6 +90,7 @@ function AddAppointment() {
   style={inputStyle}
   className="w-full border px-4 py-3 mb-2 focus:outline-none text-sm"
 />
+
 {customerSearch && (
   <div
     style={{
@@ -116,8 +119,22 @@ function AddAppointment() {
           {c.name}
         </div>
       ))}
+    
+      <div
+        onClick={() => {
+          setCustomerId(null);
+        }}
+        style={{
+          color: 'var(--accent)',
+          borderTopColor: 'var(--border)',
+        }}
+        className="px-4 py-2 text-sm cursor-pointer hover:opacity-70 transition border-t"
+      >
+        + Přidat "{customerSearch}"
+      </div>
   </div>
 )}
+
 {!customerSearch && (
   <select
     value={customerId}

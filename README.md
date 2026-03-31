@@ -1,4 +1,4 @@
-# Salon Booking
+# Salon Booking Zerio
 
 Fullstack webová aplikace pro správu rezervací a zákazníků v kosmetickém salonu. Vznikla jako reálné řešení pro rodinný podnik — cílem bylo nahradit předražené SaaS alternativy něčím vlastním, co přesně odpovídá potřebám konkrétního provozu.
 
