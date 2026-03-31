@@ -32,7 +32,7 @@ function AddAppointment() {
   }, []);
 
   const handleSubmit = async () => {
-  if (!customerSearch || !serviceName || !date || !time) return;
+  if ((!customerSearch && !customerId) || !serviceName || !date || !time) return;
 
   await fetchWithAuth(`${API_URL}/api/appointments`, {
     method: 'POST',
