@@ -81,7 +81,7 @@ function PublicProfile() {
         className="py-6 text-center"
       >
         <h1 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium tracking-widest uppercase">
-          Salon Booking
+          Zerio
         </h1>
       </div>
 

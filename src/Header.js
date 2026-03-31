@@ -14,10 +14,10 @@ function Header({ onLogout }) {
       <div className="flex items-center justify-between px-6 py-4">
         <div>
           <h1 style={{ color: 'var(--text-primary)' }} className="text-lg font-medium tracking-widest uppercase">
-            Salon Booking
+            Zerio
           </h1>
           <p style={{ color: 'var(--text-muted)' }} className="text-xs tracking-wider">
-            Rezervace pro mámův salon
+            Snadno a rychle
           </p>
         </div>
 
