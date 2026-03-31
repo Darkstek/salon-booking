@@ -14,11 +14,11 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
   const [serviceDuration, setServiceDuration] = useState('');
   const [slotDuration, setSlotDuration] = useState(60);
   const [availability, setAvailability] = useState([
-    { day_of_week: 1, start_time: '08:00', end_time: '16:00', active: true },
-    { day_of_week: 2, start_time: '08:00', end_time: '16:00', active: true },
-    { day_of_week: 3, start_time: '08:00', end_time: '16:00', active: true },
-    { day_of_week: 4, start_time: '08:00', end_time: '16:00', active: true },
-    { day_of_week: 5, start_time: '08:00', end_time: '16:00', active: true },
+    { day_of_week: 1, start_time: '08:00', end_time: '16:00', active: false },
+    { day_of_week: 2, start_time: '08:00', end_time: '16:00', active: false },
+    { day_of_week: 3, start_time: '08:00', end_time: '16:00', active: false },
+    { day_of_week: 4, start_time: '08:00', end_time: '16:00', active: false },
+    { day_of_week: 5, start_time: '08:00', end_time: '16:00', active: false },
     { day_of_week: 6, start_time: '08:00', end_time: '16:00', active: false },
     { day_of_week: 0, start_time: '08:00', end_time: '16:00', active: false },
   ]);
@@ -205,9 +205,11 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
           <option value={120}>120 minut</option>
         </select>
       </div>
-      {['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'].map((dayName, index) => {
-        const day = availability.find(d => d.day_of_week === index);
-        return (
+
+      {['Po', 'Út', 'St', 'Čt', 'Pá', 'So', 'Ne'].map((dayName, index) => {
+        const dayNumber = index === 6 ? 0 : index + 1;
+        const day = availability.find(d => d.day_of_week === dayNumber);
+          return (
           <div key={index}
             style={{
               borderColor: 'var(--border)',
@@ -222,8 +224,8 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
               </span>
               <button
                 onClick={() => setAvailability(prev => prev.map(d =>
-                  d.day_of_week === index ? { ...d, active: !d.active } : d
-                ))}
+                  d.day_of_week === dayNumber ? { ...d, active: !d.active } : d
+                  ))}
                 style={{
                   backgroundColor: day.active ? 'var(--accent)' : 'var(--border)',
                   borderRadius: '9999px',
@@ -251,8 +253,8 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
                     type="time"
                     value={day.start_time}
                     onChange={(e) => setAvailability(prev => prev.map(d =>
-                      d.day_of_week === index ? { ...d, start_time: e.target.value } : d
-                    ))}
+                    d.day_of_week === dayNumber ? { ...d, start_time: e.target.value } : d
+                        ))}
                     style={inputStyle}
                     className="w-full border px-3 py-2 focus:outline-none text-sm"
                   />
@@ -263,8 +265,8 @@ function Profile({ onThemeChange, theme, onModeChange, mode }) {
                     type="time"
                     value={day.end_time}
                     onChange={(e) => setAvailability(prev => prev.map(d =>
-                      d.day_of_week === index ? { ...d, end_time: e.target.value } : d
-                    ))}
+                      d.day_of_week === dayNumber ? { ...d, end_time: e.target.value } : d
+                        ))}
                     style={inputStyle}
                     className="w-full border px-3 py-2 focus:outline-none text-sm"
                   />
