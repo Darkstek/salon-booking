@@ -13,6 +13,7 @@ function AddAppointment() {
   const [customService, setCustomService] = useState('');
   const [useCustom, setUseCustom] = useState(false);
   const [customerSearch, setCustomerSearch] = useState('');
+  const [customerSelected, setCustomerSelected] = useState(false);
 
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/customers`)
@@ -48,6 +49,7 @@ function AddAppointment() {
 
     setCustomerId('');
     setCustomerSearch('');
+    setCustomerSelected(false);
     setServiceName('');
     setDate('');
     setTime('');
@@ -84,14 +86,15 @@ function AddAppointment() {
   placeholder="Hledat zákazníka..."
   value={customerSearch}
   onChange={(e) => {
-    setCustomerSearch(e.target.value);
-    setCustomerId('');
+      setCustomerSearch(e.target.value);
+      setCustomerId('');
+      setCustomerSelected(false);
   }}
   style={inputStyle}
   className="w-full border px-4 py-3 mb-2 focus:outline-none text-sm"
 />
 
-{customerSearch && (
+{customerSearch && !customerSelected && (
   <div
     style={{
       backgroundColor: 'var(--bg-card)',
@@ -123,6 +126,7 @@ function AddAppointment() {
       <div
         onClick={() => {
           setCustomerId(null);
+          setCustomerSelected(true);
         }}
         style={{
           color: 'var(--accent)',
