@@ -27,7 +27,7 @@ function PublicSearch({ onBack }) {
         className="py-6 text-center"
       >
         <h1 style={{ color: 'var(--text-primary)' }} className="text-xl font-medium tracking-widest uppercase">
-          Salon Booking
+          Zerio
         </h1>
         <p style={{ color: 'var(--text-muted)' }} className="mt-1 text-xs tracking-wider">
           Najděte salon ve vašem okolí

@@ -1,10 +1,11 @@
 # Zerio
 
-Booking appka kterou jsem postavil pro mámův kosmetický salon. Začalo to tím, že jsem se podíval kolik stojí normální řešení na trhu — 600 až 1000 Kč měsíčně za věci které ani nepotřebuje. Tak jsem to postavil sám.
+Booking appka kterou jsem postavil pro mamky kosmetický salon. Začalo to tím, že jsem se podíval kolik stojí normální řešení na trhu — 600 až 1000 Kč měsíčně za věci které ani nepotřebuje. Tak jsem to postavil sám. Původní nápad byl se na tom co nejvíc naučil plus pomoc mamce, aby nemusela platit předražené aplikacé tohoto typu.
 
 **Live:** [salon-booking-ashy.vercel.app](https://salon-booking-ashy.vercel.app/)
 
 > Demo přihlášení: `mama@salon.cz` / `heslo123`
+Můžete se ale i přes google zaregistrovat a pohrabat se tam <3 každým dnem to umí více věcí ... Tahle zkušenost mě opravdu naplňuje a brutálně mě to baví <3>
 
 ---
 
