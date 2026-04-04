@@ -1,72 +1,92 @@
-import { useState } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
-import toast from 'react-hot-toast';
-import API_URL from './config';
+import { useState } from "react";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
+import toast from "react-hot-toast";
+import API_URL from "./config";
 
-function Login({ onLogin, onGuest }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+function Login({
+  onLogin,
+  onGuest,
+}: {
+  onLogin: () => void;
+  onGuest: () => void;
+}) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async () => {
     const response = await fetch(`${API_URL}/api/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
     const data = await response.json();
 
     if (data.token) {
-      localStorage.setItem('token', data.token);
-      toast.success('Přihlášení úspěšné!');
+      localStorage.setItem("token", data.token);
+      toast.success("Přihlášení úspěšné!");
       onLogin();
     } else {
       toast.error(data.error);
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
+  const handleGoogleSuccess = async (
+    credentialResponse: CredentialResponse,
+  ) => {
     const response = await fetch(`${API_URL}/api/auth/google`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: credentialResponse.credential }),
     });
 
     const data = await response.json();
 
     if (data.token) {
-      localStorage.setItem('token', data.token);
-      toast.success('Přihlášení přes Google úspěšné!');
+      localStorage.setItem("token", data.token);
+      toast.success("Přihlášení přes Google úspěšné!");
       onLogin();
     } else {
-      toast.error('Google přihlášení selhalo');
+      toast.error("Google přihlášení selhalo");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{
-      backgroundImage: 'url(/nightcity.jpg)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundAttachment: 'fixed',
-    }}>
-      <div style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: '#0a0a0a',
-        opacity: 0.75,
-        zIndex: 0,
-        pointerEvents: 'none',
-      }} />
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{
+        backgroundImage: "url(/nightcity.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          backgroundColor: "#0a0a0a",
+          opacity: 0.75,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
 
-      <div className="bg-[#1a1d27] border border-white/5 rounded-2xl p-10 w-full max-w-md" style={{ position: 'relative', zIndex: 1 }}>
-        <h1 className="text-3xl font-medium text-white mb-2 tracking-widest uppercase">Salon Booking</h1>
-        <p className="text-gray-600 mb-8 text-sm tracking-wide">Přihlaste se pro správu salonu</p>
+      <div
+        className="bg-[#1a1d27] border border-white/5 rounded-2xl p-10 w-full max-w-md"
+        style={{ position: "relative", zIndex: 1 }}
+      >
+        <h1 className="text-3xl font-medium text-white mb-2 tracking-widest uppercase">
+          Salon Booking
+        </h1>
+        <p className="text-gray-600 mb-8 text-sm tracking-wide">
+          Přihlaste se pro správu salonu
+        </p>
 
         <div className="mb-6 flex justify-center">
           <GoogleLogin
             onSuccess={handleGoogleSuccess}
-            onError={() => toast.error('Google přihlášení selhalo')}
+            onError={() => toast.error("Google přihlášení selhalo")}
           />
         </div>
 
@@ -94,14 +114,16 @@ function Login({ onLogin, onGuest }) {
 
         <button
           onClick={handleSubmit}
-          style={{ backgroundColor: 'var(--accent)' }}
+          style={{ backgroundColor: "var(--accent)" }}
           className="text-gray-900 font-medium py-3 px-6 rounded-lg w-full transition mb-4 tracking-wide text-sm hover:opacity-90"
         >
           Přihlásit se
         </button>
 
         <div className="border-t border-white/5 pt-4 mt-2">
-          <p className="text-center text-gray-600 text-xs mb-3 tracking-wide">Hledáte salon?</p>
+          <p className="text-center text-gray-600 text-xs mb-3 tracking-wide">
+            Hledáte salon?
+          </p>
           <button
             onClick={onGuest}
             className="w-full bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 px-6 rounded-lg transition text-sm tracking-wide"
