@@ -18,26 +18,30 @@ function App() {
     !!localStorage.getItem("token"),
   );
   const [isGuest, setIsGuest] = useState<boolean>(false);
-  const [theme, setTheme] = useState<Theme>("green");
-  const [mode, setMode] = useState<Mode>("dark");
+  const [theme, setTheme] = useState<Theme>(
+    (localStorage.getItem("theme") as Theme) || "green",
+  );
+  const [mode, setMode] = useState<Mode>(
+    (localStorage.getItem("mode") as Mode) || "dark",
+  );
 
-  useEffect(() => {
-    if (theme === "green") {
-      document.documentElement.removeAttribute("data-theme");
-    } else {
-      document.documentElement.setAttribute("data-theme", theme);
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  // useEffect(() => {
+  //   if (theme === "green") {
+  //     document.documentElement.removeAttribute("data-theme");
+  //   } else {
+  //     document.documentElement.setAttribute("data-theme", theme);
+  //   }
+  //   localStorage.setItem("theme", theme);
+  // }, [theme]);
 
-  useEffect(() => {
-    if (mode === "dark") {
-      document.documentElement.removeAttribute("data-mode");
-    } else {
-      document.documentElement.setAttribute("data-mode", mode);
-    }
-    localStorage.setItem("mode", mode);
-  }, [mode]);
+  // useEffect(() => {
+  //   if (mode === "dark") {
+  //     document.documentElement.removeAttribute("data-mode");
+  //   } else {
+  //     document.documentElement.setAttribute("data-mode", mode);
+  //   }
+  //   localStorage.setItem("mode", mode);
+  // }, [mode]);
 
   const handleLogin = (): void => setIsLoggedIn(true);
 
