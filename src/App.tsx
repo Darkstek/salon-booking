@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import Header from "./Header";
@@ -25,23 +25,23 @@ function App() {
     (localStorage.getItem("mode") as Mode) || "dark",
   );
 
-  // useEffect(() => {
-  //   if (theme === "green") {
-  //     document.documentElement.removeAttribute("data-theme");
-  //   } else {
-  //     document.documentElement.setAttribute("data-theme", theme);
-  //   }
-  //   localStorage.setItem("theme", theme);
-  // }, [theme]);
+  useEffect(() => {
+    if (theme === "green") {
+      document.documentElement.removeAttribute("data-theme");
+    } else {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
-  // useEffect(() => {
-  //   if (mode === "dark") {
-  //     document.documentElement.removeAttribute("data-mode");
-  //   } else {
-  //     document.documentElement.setAttribute("data-mode", mode);
-  //   }
-  //   localStorage.setItem("mode", mode);
-  // }, [mode]);
+  useEffect(() => {
+    if (mode === "dark") {
+      document.documentElement.removeAttribute("data-mode");
+    } else {
+      document.documentElement.setAttribute("data-mode", mode);
+    }
+    localStorage.setItem("mode", mode);
+  }, [mode]);
 
   const handleLogin = (): void => setIsLoggedIn(true);
 
