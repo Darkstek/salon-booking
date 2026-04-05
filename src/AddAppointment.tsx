@@ -38,7 +38,7 @@ function AddAppointment() {
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/customers`)
       .then((res) => res.json())
-      .then((data) => setCustomers(data));
+      .then((data) => setCustomers(Array.isArray(data) ? data : []));
 
     fetchWithAuth(`${API_URL}/api/profile`)
       .then((res) => res.json())
@@ -46,7 +46,7 @@ function AddAppointment() {
         if (profile?.user_id) {
           fetch(`${API_URL}/api/services/${profile.user_id}`)
             .then((res) => res.json())
-            .then((data) => setServices(data));
+            .then((data) => setServices(Array.isArray(data) ? data : []));
         }
       });
   }, []);
