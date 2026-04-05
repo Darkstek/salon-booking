@@ -92,7 +92,6 @@ function App() {
             mode === "light" ? "url(/lightcity.jpg)" : "url(/nightcity.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          backgroundAttachment: "fixed",
         }}
       >
         <Toaster position="top-right" />
