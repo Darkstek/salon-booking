@@ -18,12 +18,8 @@ function App() {
     !!localStorage.getItem("token"),
   );
   const [isGuest, setIsGuest] = useState<boolean>(false);
-  const [theme, setTheme] = useState<Theme>(
-    (localStorage.getItem("theme") as Theme) || "green",
-  );
-  const [mode, setMode] = useState<Mode>(
-    (localStorage.getItem("mode") as Mode) || "dark",
-  );
+  const [theme, setTheme] = useState<Theme>("green");
+  const [mode, setMode] = useState<Mode>("dark");
 
   useEffect(() => {
     if (theme === "green") {
