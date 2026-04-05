@@ -22,7 +22,7 @@ function AppointmentList() {
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/appointments`)
       .then((res) => res.json())
-      .then((data) => setAppointments(data));
+      .then((data) => setAppointments(Array.isArray(data) ? data : []));
   }, []);
 
   const handleDelete = async (id: number): Promise<void> => {

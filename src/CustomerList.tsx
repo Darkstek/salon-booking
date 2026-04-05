@@ -39,7 +39,7 @@ function CustomerList() {
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/customers`)
       .then((res) => res.json())
-      .then((data) => setCustomers(data));
+      .then((data) => setCustomers(Array.isArray(data) ? data : []));
   }, []);
 
   const handleSubmit = async (): Promise<void> => {
