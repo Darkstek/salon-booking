@@ -305,7 +305,7 @@ function AddAppointment() {
               Termín již existuje
             </h3>
             <p style={{ color: "var(--text-muted)" }} className="text-sm mb-6">
-              V {date} v {time} již existuje termín. Chcete přidat další?
+              {date} v {time} již existuje termín. Chcete přidat další?
             </p>
             <div className="flex gap-3">
               <button
