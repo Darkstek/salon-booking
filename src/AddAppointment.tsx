@@ -34,6 +34,7 @@ function AddAppointment() {
   const [useCustom, setUseCustom] = useState<boolean>(false);
   const [customerSearch, setCustomerSearch] = useState<string>("");
   const [customerSelected, setCustomerSelected] = useState<boolean>(false);
+  const [showConflictModal, setShowConflictModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/customers`)
@@ -70,10 +71,7 @@ function AddAppointment() {
     });
 
     if (response.status === 409 && !force) {
-      const confirmed = window.confirm(
-        `V ${time} již existuje termín. Chcete přidat další?`,
-      );
-      if (confirmed) handleSubmit(true);
+      setShowConflictModal(true);
       return;
     }
 
@@ -289,6 +287,55 @@ function AddAppointment() {
       >
         Uložit termín
       </button>
+
+      {showConflictModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+          <div
+            style={{
+              backgroundColor: "var(--bg-secondary)",
+              borderColor: "var(--border)",
+              borderRadius: "var(--radius)",
+            }}
+            className="border p-8 max-w-sm w-full mx-4"
+          >
+            <h3
+              style={{ color: "var(--text-primary)" }}
+              className="text-lg font-medium mb-2 tracking-wide"
+            >
+              Termín již existuje
+            </h3>
+            <p style={{ color: "var(--text-muted)" }} className="text-sm mb-6">
+              V {date} v {time} již existuje termín. Chcete přidat další?
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => {
+                  setShowConflictModal(false);
+                  handleSubmit(true);
+                }}
+                style={{
+                  backgroundColor: "var(--accent)",
+                  borderRadius: "var(--radius-sm)",
+                }}
+                className="text-gray-900 font-medium py-2 px-6 flex-1 transition hover:opacity-90"
+              >
+                Přidat
+              </button>
+              <button
+                onClick={() => setShowConflictModal(false)}
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  color: "var(--text-muted)",
+                  borderRadius: "var(--radius-sm)",
+                }}
+                className="font-medium py-2 px-6 flex-1 transition hover:opacity-80"
+              >
+                Zrušit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
