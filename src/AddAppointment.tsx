@@ -38,7 +38,7 @@ function AddAppointment() {
   useEffect(() => {
     fetchWithAuth(`${API_URL}/api/customers`)
       .then((res) => res.json())
-      .then((data) => setCustomers(Array.isArray(data) ? data : []));
+      .then((data) => setCustomers(data));
 
     fetchWithAuth(`${API_URL}/api/profile`)
       .then((res) => res.json())
@@ -46,16 +46,16 @@ function AddAppointment() {
         if (profile?.user_id) {
           fetch(`${API_URL}/api/services/${profile.user_id}`)
             .then((res) => res.json())
-            .then((data) => setServices(Array.isArray(data) ? data : []));
+            .then((data) => setServices(data));
         }
       });
   }, []);
 
-  const handleSubmit = async (): Promise<void> => {
+  const handleSubmit = async (force: boolean = false): Promise<void> => {
     if ((!customerSearch && !customerId) || !serviceName || !date || !time)
       return;
 
-    await fetchWithAuth(`${API_URL}/api/appointments`, {
+    const response = await fetchWithAuth(`${API_URL}/api/appointments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -65,8 +65,17 @@ function AddAppointment() {
         appointment_date: date,
         appointment_time: time,
         note,
+        force,
       }),
     });
+
+    if (response.status === 409 && !force) {
+      const confirmed = window.confirm(
+        `V ${time} již existuje termín. Chcete přidat další?`,
+      );
+      if (confirmed) handleSubmit(true);
+      return;
+    }
 
     setCustomerId(null);
     setCustomerSearch("");
@@ -270,7 +279,7 @@ function AddAppointment() {
       />
 
       <button
-        onClick={handleSubmit}
+        onClick={() => handleSubmit()}
         style={{
           backgroundColor: "var(--accent)",
           borderRadius: "var(--radius-sm)",
