@@ -9,6 +9,7 @@ import Login from "./Login";
 import Profile from "./Profile";
 import PublicSearch from "./PublicSearch";
 import PublicProfile from "./PublicProfile";
+import AiChat from "./AiChat";
 
 type Theme = "green" | "blue" | "pink" | "cyberpunk";
 type Mode = "dark" | "light";
@@ -106,6 +107,7 @@ function App() {
           }}
         />
         <Header onLogout={handleLogout} />
+        <AiChat />
         <div
           className="max-w-2xl mx-auto px-4"
           style={{ position: "relative", zIndex: 1 }}
