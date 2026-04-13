@@ -98,7 +98,7 @@ function Profile({ onThemeChange, theme, onModeChange, mode }: ProfileProps) {
         if (profile?.user_id) {
           fetch(`${API_URL}/api/services/${profile.user_id}`)
             .then((res) => res.json())
-            .then((data) => setServices(data));
+            .then((data) => setServices(Array.isArray(data) ? data : []));
         }
       });
   }, []);
